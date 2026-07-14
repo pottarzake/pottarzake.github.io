@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Zake 的个人博客</title>
+        <link>http://localhost:1313/posts/</link>
+        <description>Recent content in Posts on Zake 的个人博客</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <lastBuildDate>Sun, 25 Jan 2026 17:52:04 +0800</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>BIT信科大一通关指南</title>
+        <link>http://localhost:1313/posts/bit%E4%BF%A1%E7%A7%91%E5%A4%A7%E4%B8%80%E9%80%9A%E5%85%B3%E6%8C%87%E5%8D%97/</link>
+        <pubDate>Sun, 25 Jan 2026 17:52:04 +0800</pubDate>
+        
+        <guid>http://localhost:1313/posts/bit%E4%BF%A1%E7%A7%91%E5%A4%A7%E4%B8%80%E9%80%9A%E5%85%B3%E6%8C%87%E5%8D%97/</guid>
+        <description>&lt;p&gt;#前言&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在大学的生活真让人觉得，哪天微信会发来班主任的通知，告诉我从明天开始体验活动结束，照常上课。但不管怎么样，确实是新的生活和学习节奏。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;虽然最终我的成绩不算优秀，但每当学期中遇到困难、困扰，总能从各路老登手里获得些什么，开始去解决面对的问题。也感谢各位学长学姐对我的帮助，你们的关照帮助我度过了大学最无助的那段时光。&lt;/p&gt;
+&lt;p&gt;这里是OvidEros学长整理的资料（我所做的便是效仿于此），对我的帮助非常大，链接贴在这里，他的blog有很多宝藏。&lt;br&gt;
+（old.ovideros.site）&lt;br&gt;
+（ovideros.site）&lt;/p&gt;
+&lt;p&gt;信息总需要更新，希望我缝缝补补后的成果可以在需要的时候帮助到你。&lt;/p&gt;
+&lt;p&gt;#关于暑假&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
