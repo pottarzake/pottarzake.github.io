@@ -12,8 +12,7 @@
         <pubDate>Tue, 14 Jul 2026 10:00:00 +0800</pubDate>
         
         <guid>https://example.org/post/bit-guide/</guid>
-        <description>&lt;p&gt;{{ .TableOfContents }}&lt;/p&gt;
-&lt;h1 id=&#34;前言&#34;&gt;前言
+        <description>&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;&lt;strong&gt;在大学的生活真让人觉得，哪天微信会发来班主任的通知，告诉我从明天开始体验活动结束，照常上课。但不管怎么样，确实是新的生活和学习节奏。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;虽然最终我的成绩不算优秀，但机缘巧合，认识的学长很多。每当学期中遇到困难、困扰，总能从各路大神手里获得些什么，开始去解决面对的问题。也感谢各位学长学姐对我的帮助，你们的关照帮助我度过了大学最无助的那段时光。&lt;/p&gt;
 &lt;p&gt;我是一个爱胡思乱想的人，这篇博客既整理资料，也整理一些我的思考，希望能在你需要的时候，给你一些帮助。&lt;/p&gt;
@@ -35,7 +34,7 @@
 &lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4.jpg&#34;
 	width=&#34;2275&#34;
 	height=&#34;1279&#34;
-	srcset=&#34;https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_9519f37d3a441f20.jpg 480w, https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_6d263987e0b591e.jpg 1024w&#34;
+	srcset=&#34;https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_a019115cc0ad594.jpg 480w, https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_eb87c940f638c151.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;破防水&#34;
@@ -104,7 +103,7 @@
 &lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/pku.jpg&#34;
 	width=&#34;1706&#34;
 	height=&#34;1279&#34;
-	srcset=&#34;https://example.org/post/bit-guide/pku_hu_8e19c42b340357b7.jpg 480w, https://example.org/post/bit-guide/pku_hu_5a52c5eca8cd44eb.jpg 1024w&#34;
+	srcset=&#34;https://example.org/post/bit-guide/pku_hu_df1544b37b05856b.jpg 480w, https://example.org/post/bit-guide/pku_hu_c6baf7437b387b34.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;北京理工大学&#34;
@@ -129,7 +128,7 @@
 &lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE.jpg&#34;
 	width=&#34;800&#34;
 	height=&#34;577&#34;
-	srcset=&#34;https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_21d0d332a0fd2e92.jpg 480w, https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_86dc60d7a790428f.jpg 1024w&#34;
+	srcset=&#34;https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_ce2985bb0c8e9d1b.jpg 480w, https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_9fd0a4c0aa051f5f.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;橡皮&#34;
