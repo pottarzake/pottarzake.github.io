@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Zake 的个人博客</title>
-        <link>https://example.org/</link>
+        <link>https://pottarzake.github.io/</link>
         <description>Recent content on Zake 的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <lastBuildDate>Tue, 08 Sep 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 08 Sep 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://pottarzake.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>睿信书院竞赛报名指南</title>
-        <link>https://example.org/post/ruixin-competition/</link>
+        <link>https://pottarzake.github.io/post/ruixin-competition/</link>
         <pubDate>Tue, 08 Sep 2026 10:00:00 +0800</pubDate>
         
-        <guid>https://example.org/post/ruixin-competition/</guid>
+        <guid>https://pottarzake.github.io/post/ruixin-competition/</guid>
         <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;适用对象&lt;/strong&gt;：北京理工大学睿信书院学生，可作为科学素养与综测赛事参考。&lt;/p&gt;&lt;/blockquote&gt;
 &lt;blockquote&gt;
@@ -1468,10 +1468,10 @@
         </item>
         <item>
         <title>BIT大一信科全流程整理</title>
-        <link>https://example.org/post/bit-guide/</link>
+        <link>https://pottarzake.github.io/post/bit-guide/</link>
         <pubDate>Tue, 14 Jul 2026 10:00:00 +0800</pubDate>
         
-        <guid>https://example.org/post/bit-guide/</guid>
+        <guid>https://pottarzake.github.io/post/bit-guide/</guid>
         <description>&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;&lt;strong&gt;在大学的生活真让人觉得，哪天微信会发来班主任的通知，告诉我从明天开始体验活动结束，照常上课。但不管怎么样，确实是新的生活和学习节奏。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;虽然最终我的成绩不算优秀，但机缘巧合，认识的学长很多。每当学期中遇到困难、困扰，总能从各路大神手里获得些什么，开始去解决面对的问题。也感谢各位学长学姐对我的帮助，你们的关照帮助我度过了大学最无助的那段时光。&lt;/p&gt;
@@ -1491,10 +1491,10 @@
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1XM4y1c7Jp/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;考试周破防&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;梗是一个时代特定群体的精神缩影，作为从北理诞生的最火的梗，俨然成为BIT最靓丽的风景线。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://pottarzake.github.io/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4.jpg&#34;
 	width=&#34;2275&#34;
 	height=&#34;1279&#34;
-	srcset=&#34;https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_a019115cc0ad594.jpg 480w, https://example.org/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_eb87c940f638c151.jpg 1024w&#34;
+	srcset=&#34;https://pottarzake.github.io/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_a019115cc0ad594.jpg 480w, https://pottarzake.github.io/post/bit-guide/%E7%A0%B4%E9%98%B2%E6%B0%B4_hu_eb87c940f638c151.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;破防水&#34;
@@ -1560,10 +1560,10 @@
 &lt;h3 id=&#34;体育课与校公选课&#34;&gt;体育课与校公选课
 &lt;/h3&gt;&lt;p&gt;BIT的体育课也是一绝。如果选自己不太了解的，可能期末会有一定压力，但可以多掌握一门技能，看个人选择了。有一些雷很重的还是要避一下。我很喜欢在体育馆的课，冬暖夏凉。&lt;/p&gt;
 &lt;p&gt;校公选课还是以兴趣为主，只要不挂就行，我很推荐北理的文科课，很有意思。毕竟在北理不学理工跟在北大有什么区别。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/pku.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://pottarzake.github.io/post/bit-guide/pku.jpg&#34;
 	width=&#34;1706&#34;
 	height=&#34;1279&#34;
-	srcset=&#34;https://example.org/post/bit-guide/pku_hu_df1544b37b05856b.jpg 480w, https://example.org/post/bit-guide/pku_hu_c6baf7437b387b34.jpg 1024w&#34;
+	srcset=&#34;https://pottarzake.github.io/post/bit-guide/pku_hu_df1544b37b05856b.jpg 480w, https://pottarzake.github.io/post/bit-guide/pku_hu_c6baf7437b387b34.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;北京理工大学&#34;
@@ -1585,10 +1585,10 @@
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;极其坐牢，吞时间兽&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;工程制图给人的感觉就是听得懂、画不对，对于我，几乎所有的水课，都是在画工程制图，关键是还没画对，相当痛苦。&lt;/p&gt;
 &lt;p&gt;我有以下几点总结：①工欲善其事必先利其器，除了工具包以外，强烈安利准备一个自动铅笔，一个长得很像笔的橡皮（找了一个广告图），可以极大的提升画图效率。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://pottarzake.github.io/post/bit-guide/%E6%A9%A1%E7%9A%AE.jpg&#34;
 	width=&#34;800&#34;
 	height=&#34;577&#34;
-	srcset=&#34;https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_ce2985bb0c8e9d1b.jpg 480w, https://example.org/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_9fd0a4c0aa051f5f.jpg 1024w&#34;
+	srcset=&#34;https://pottarzake.github.io/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_ce2985bb0c8e9d1b.jpg 480w, https://pottarzake.github.io/post/bit-guide/%E6%A9%A1%E7%9A%AE_hu_9fd0a4c0aa051f5f.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;橡皮&#34;
@@ -1716,10 +1716,10 @@
         </item>
         <item>
         <title>Hello Hugo</title>
-        <link>https://example.org/post/hello-hugo/</link>
+        <link>https://pottarzake.github.io/post/hello-hugo/</link>
         <pubDate>Sun, 25 Jan 2026 17:10:37 +0800</pubDate>
         
-        <guid>https://example.org/post/hello-hugo/</guid>
+        <guid>https://pottarzake.github.io/post/hello-hugo/</guid>
         <description>&lt;p&gt;希望这份温情能跨越时间，带给迷茫的你一丝方向。&lt;/p&gt;
 </description>
         </item>
