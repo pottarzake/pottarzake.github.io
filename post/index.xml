@@ -1,4 +1,431 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Zake 的个人博客</title><link>https://pottarzake.github.io/post/</link><description>Recent content in Posts on Zake 的个人博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 08 Sep 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://pottarzake.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>睿信书院综测及竞赛报名指南</title><link>https://pottarzake.github.io/post/ruixin-competition/</link><pubDate>Tue, 08 Sep 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/ruixin-competition/</guid><description>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Zake 的个人博客</title><link>https://pottarzake.github.io/post/</link><description>Recent content in Posts on Zake 的个人博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 Oct 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://pottarzake.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>聚类学习全流程整理：从 K-means、谱聚类到多视角表示</title><link>https://pottarzake.github.io/post/clustering-guide/</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/clustering-guide/</guid><description>&lt;h2 id="写在前面">写在前面
+&lt;/h2>&lt;p>这份指南以系统建立聚类知识为主线，涵盖聚类问题与数学基础、K-means、谱聚类、多视图融合/embedding、评价方法、8 周学习路线和自测题。项目现有研究资料仅列在最后作为可选衔接阅读。&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>目标读者&lt;/strong>：已经接触机器学习基本概念，希望把聚类方法从&amp;quot;会调用&amp;quot;学到&amp;quot;看懂假设、目标函数、表示空间与实验&amp;quot;。&lt;/p>
+&lt;p>&lt;strong>学习主线&lt;/strong>：聚类到底在优化什么 → K-means 如何把几何压成中心 → 谱聚类如何把数据变成图并用特征向量嵌入 → 多视图如何协调多种表示 → 如何公平地验证聚类结果。&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="一先建立全局地图">一、先建立全局地图
+&lt;/h2>&lt;p>聚类不是唯一、明确的&amp;quot;真分组&amp;quot;发现器。任何聚类算法都隐含了自己认为什么是一个簇：K-means 偏好欧氏空间里围绕中心紧凑的组；谱聚类利用相似图中的连通结构；多视图方法还要决定不同视图在哪里、以什么方式相互补充或达成共识。Jain 对聚类任务的回顾特别强调了聚类问题本身的探索性和&amp;quot;没有通用聚类算法&amp;quot;的困难。&lt;a class="link" href="https://doi.org/10.1016/j.patrec.2009.09.011" target="_blank" rel="noopener"
+>Data clustering: 50 years beyond K-means（期刊页）&lt;/a>&lt;/p>
+&lt;p>建议一直追问下面六件事：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>对象与视图是什么？&lt;/strong> 一行代表一个样本还是一类关系？每个视图的数据矩阵是什么？&lt;/li>
+&lt;li>&lt;strong>相似度怎么定义？&lt;/strong> 欧氏距离、余弦、核函数、近邻图，或模型自己学习？&lt;/li>
+&lt;li>&lt;strong>算法优化什么目标？&lt;/strong> 簇内误差、图切割、一致性、重构，还是这些目标的加权组合？&lt;/li>
+&lt;li>&lt;strong>表示在哪里产生？&lt;/strong> 直接使用输入特征、投影后特征、图谱嵌入、共同潜空间，还是每视图独立嵌入？&lt;/li>
+&lt;li>&lt;strong>怎样得到离散簇标签？&lt;/strong> 直接分配、K-means 后处理，或共识/匹配步骤？&lt;/li>
+&lt;li>&lt;strong>证据是什么？&lt;/strong> 数据、预处理、簇数、随机种子、评价指标和消融是否支撑论文结论？&lt;/li>
+&lt;/ol>
+&lt;h3 id="建议先备的数学">建议先备的数学
+&lt;/h3>&lt;ul>
+&lt;li>向量、矩阵乘法、范数、距离和内积；&lt;/li>
+&lt;li>特征值与特征向量、正交投影、奇异值分解（SVD）；&lt;/li>
+&lt;li>概率、均值和协方差；&lt;/li>
+&lt;li>最优化中的约束、拉格朗日乘子和松弛；&lt;/li>
+&lt;li>图的节点、边、度、连通分量。&lt;/li>
+&lt;/ul>
+&lt;p>不必先学完整套谱图理论或深度学习理论。遇到一篇方法论文时，再沿着公式补需要的背景。&lt;/p>
+&lt;hr>
+&lt;h2 id="二第一阶段聚类目标与-k-means">二、第一阶段：聚类目标与 K-means
+&lt;/h2>&lt;h3 id="21-先读入门综述而不是从论文公式开始">2.1 先读入门综述，而不是从论文公式开始
+&lt;/h3>&lt;p>&lt;strong>Anil K. Jain, “Data clustering: 50 years beyond K-means,” Pattern Recognition Letters, 2010。&lt;/strong>&lt;a class="link" href="https://doi.org/10.1016/j.patrec.2009.09.011" target="_blank" rel="noopener"
+>期刊页面&lt;/a>；&lt;a class="link" href="https://www.cse.msu.edu/~cse802/Papers/DataClustering50yearsBeyondKmeans.pdf" target="_blank" rel="noopener"
+>作者主页 PDF&lt;/a>&lt;/p>
+&lt;p>阅读重点：聚类和分类的差别、算法的归纳偏置、距离与数据表示对结果的影响、为什么没有一个算法适合所有数据。&lt;/p>
+&lt;p>&lt;strong>带着问题读&lt;/strong>：为什么同一份数据换一种距离或特征缩放就可能出现不同簇？“算法找到了真实类别”这个说法在什么情况下过强？&lt;/p>
+&lt;h3 id="22-k-means-的目标函数">2.2 K-means 的目标函数
+&lt;/h3>&lt;p>给定样本 \(x_1,\ldots,x_n\in\mathbb{R}^d\) 和 \(K\) 个簇，K-means 最小化簇内平方和：&lt;/p>
+\[
+\min_{C_1,\ldots,C_K}\sum_{k=1}^{K}\sum_{x_i\in C_k}\|x_i-\mu_k\|_2^2,
+\qquad
+\mu_k=\frac{1}{|C_k|}\sum_{x_i\in C_k}x_i.
+\]&lt;p>Lloyd 迭代反复做两步：把样本分给最近的中心；把每个中心更新为本簇均值。每一步都不会增加该目标，但这是一个非凸问题，所以结果依赖初始化，通常只得到局部最优。K-means 的“均值中心”最优性质来自平方欧氏距离；换距离或特征尺度时，模型含义也会变。&lt;/p>
+&lt;p>原始/经典来源：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>James MacQueen, “Some Methods for Classification and Analysis of Multivariate Observations,” Fifth Berkeley Symposium, 1967&lt;/strong>：早期明确描述 k-means 程序。适合看它的增量更新形式。&lt;a class="link" href="https://digicoll.lib.berkeley.edu/record/113015?v=pdf" target="_blank" rel="noopener"
+>UC Berkeley 数字馆藏与原文&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Stuart P. Lloyd, “Least Squares Quantization in PCM,” IEEE Transactions on Information Theory, 1982&lt;/strong>：从最小平方量化推导迭代条件。该工作在 Bell Labs 流传多年后才于 1982 年正式刊行，不要把提出和刊行年份混为一谈。&lt;a class="link" href="https://doi.org/10.1109/TIT.1982.1056489" target="_blank" rel="noopener"
+>IEEE DOI（正式书目信息）&lt;/a>；&lt;a class="link" href="https://web.stanford.edu/class/ee398a/handouts/papers/Lloyd%20-%20Least%20Squares%20Q%20in%20PCM.pdf" target="_blank" rel="noopener"
+>公开 PDF（Stanford 课程镜像）&lt;/a>&lt;/li>
+&lt;li>&lt;strong>David Arthur &amp;amp; Sergei Vassilvitskii, “k-means++: the Advantages of Careful Seeding,” SODA 2007&lt;/strong>：研究如何选初始中心，提出按当前最近中心距离平方进行抽样的初始化策略，并给出期望近似保证。&lt;a class="link" href="https://research.google/pubs/k-means-the-advantages-of-careful-seeding/" target="_blank" rel="noopener"
+>Google Research 出版记录&lt;/a>；&lt;a class="link" href="https://haralick.org/ML/kMeansPP-soda.pdf" target="_blank" rel="noopener"
+>论文 PDF&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="23-k-means-必须理解的优缺点">2.3 K-means 必须理解的优缺点
+&lt;/h3>&lt;p>&lt;strong>优点&lt;/strong>：简单、速度快、易并行；目标函数清晰；适合大样本且簇大致紧凑、尺度相近的场景。&lt;/p>
+&lt;p>&lt;strong>局限&lt;/strong>：需要指定 \(K\)；对初始化和离群点敏感；偏好球状或凸形簇；平方欧氏距离会让尺度大的维度影响更大；高维稀疏数据的欧氏距离可能缺乏区分度。&lt;/p>
+&lt;p>可继续读：&lt;strong>Ding &amp;amp; He, “K-means Clustering via Principal Component Analysis,” ICML 2004&lt;/strong>。论文分析 K-means 指示矩阵的连续松弛与主成分的关系。重点理解这是目标和松弛之间的数学联系，&lt;strong>PCA 降维不等于已经做了 K-means 聚类&lt;/strong>。&lt;a class="link" href="https://icml.cc/Conferences/2004/proceedings/papers/262.pdf" target="_blank" rel="noopener"
+>ICML 官方论文 PDF&lt;/a>&lt;/p>
+&lt;h3 id="24-实践任务">2.4 实践任务
+&lt;/h3>&lt;p>用二维合成数据各做一次：紧凑高斯团、不同尺度的团、两个弯月形团、含离群点的数据。&lt;/p>
+&lt;ul>
+&lt;li>对每份数据运行 K-means，至少重复 10 个随机种子；&lt;/li>
+&lt;li>比较随机初始化与 K-means++；&lt;/li>
+&lt;li>记录簇内平方和、运行时间、不同运行之间的一致性；&lt;/li>
+&lt;li>改变特征尺度，观察结果怎样改变；&lt;/li>
+&lt;li>解释哪些数据违反了 K-means 的几何假设。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>阶段检查&lt;/strong>：不看代码也能写出 K-means 两个更新步骤，能解释它为什么下降但不保证全局最优，也能说出“均值中心 + 平方欧氏距离”对应的簇形状偏好。&lt;/p>
+&lt;hr>
+&lt;h2 id="三第二阶段谱聚类与谱嵌入">三、第二阶段：谱聚类与谱嵌入
+&lt;/h2>&lt;p>谱聚类的关键变化是：先不问“样本离哪个中心近”，而先构造一个&lt;strong>样本相似图&lt;/strong>。图上的近邻与边权表达局部结构，图拉普拉斯矩阵的特征向量再把图结构嵌入到低维空间。最后常用 K-means 将嵌入向量离散成簇。因此谱聚类内部仍可能调用 K-means，但它对 K-means 输入的几何做了重新表达。&lt;/p>
+&lt;h3 id="31-必读教程">3.1 必读教程
+&lt;/h3>&lt;p>**Ulrike von Luxburg, “A Tutorial on Spectral Clustering,” Statistics and Computing, 2007。**先读它，而非试图一次读完所有谱聚类论文。&lt;a class="link" href="https://arxiv.org/abs/0711.0189" target="_blank" rel="noopener"
+>arXiv 全文&lt;/a>；&lt;a class="link" href="https://doi.org/10.1007/s11222-007-9033-z" target="_blank" rel="noopener"
+>期刊 DOI&lt;/a>&lt;/p>
+&lt;p>重点顺序：&lt;/p>
+&lt;ol>
+&lt;li>相似图的构造：
+&lt;ul>
+&lt;li>ε-邻域图；&lt;/li>
+&lt;li>\(k\)-近邻图及 mutual \(k\)-NN；&lt;/li>
+&lt;li>全连接高斯相似度图。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>度矩阵 \(D_{ii}=\sum_j W_{ij}\) 与未归一化拉普拉斯 \(L=D-W\)。&lt;/li>
+&lt;li>两种归一化拉普拉斯：\(L_{sym}=D^{-1/2}LD^{-1/2}\) 和 \(L_{rw}=D^{-1}L\)。&lt;/li>
+&lt;li>RatioCut / Normalized Cut 与特征向量松弛之间的关系。&lt;/li>
+&lt;li>Shi–Malik 与 Ng–Jordan–Weiss 等算法步骤的差异。&lt;/li>
+&lt;/ol>
+&lt;h3 id="32-代表论文">3.2 代表论文
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Shi &amp;amp; Malik, “Normalized Cuts and Image Segmentation,” IEEE TPAMI, 2000&lt;/strong>：将图切割目标用于图像分割，理解 Normalized Cut 为什么同时关心切断边权和两侧体量。&lt;a class="link" href="https://doi.org/10.1109/34.868688" target="_blank" rel="noopener"
+>论文 DOI&lt;/a>；&lt;a class="link" href="https://www.cs.cmu.edu/~efros/courses/AP06/Papers/shi-pami-00.pdf" target="_blank" rel="noopener"
+>作者公开 PDF&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Ng, Jordan &amp;amp; Weiss, “On Spectral Clustering: Analysis and an Algorithm,” NeurIPS 2001&lt;/strong>：常见归一化谱聚类流程的代表作，分析基于特征向量的算法。&lt;a class="link" href="https://papers.nips.cc/paper_files/paper/2001/hash/801272ee79cfde7fa5960571fee36b9b-Abstract.html" target="_blank" rel="noopener"
+>NeurIPS 原始页面与全文&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Belkin &amp;amp; Niyogi, “Laplacian Eigenmaps and Spectral Techniques for Embedding and Clustering,” NeurIPS 2001&lt;/strong>：理解“图拉普拉斯既能用于低维嵌入，也与聚类相关”的桥梁。注意 Laplacian Eigenmaps 是降维嵌入算法，不应和每个谱聚类变体视为同一算法。&lt;a class="link" href="https://papers.nips.cc/paper_files/paper/2001/hash/f106b7f99d2cb30c3db1c3cc0fde9ccb-Abstract.html" target="_blank" rel="noopener"
+>NeurIPS 原始页面&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="33-把谱聚类算法完整写出来">3.3 把谱聚类算法完整写出来
+&lt;/h3>&lt;p>一个常见的 Ng–Jordan–Weiss 版本可概括为：&lt;/p>
+&lt;ol>
+&lt;li>根据样本特征和超参数建相似度矩阵 \(W\)；&lt;/li>
+&lt;li>计算 \(D\) 和 \(L_{sym}\)；&lt;/li>
+&lt;li>取对应最小特征值的前 \(K\) 个特征向量，组成 \(U\in\mathbb{R}^{n\times K}\)；&lt;/li>
+&lt;li>对 \(U\) 的每一行归一化，得到每个样本的谱嵌入；&lt;/li>
+&lt;li>在嵌入行向量上运行 K-means。&lt;/li>
+&lt;/ol>
+&lt;p>谱聚类不“天然免调参”。邻居数、核带宽、图是否对称、是否归一化、选哪组特征向量、最终离散化方法都会改变结果。大型数据还会遇到构造 \(n\times n\) 图和特征分解的计算、内存成本。&lt;/p>
+&lt;h3 id="34-实践任务">3.4 实践任务
+&lt;/h3>&lt;p>在弯月形/同心圆数据上比较 K-means 与谱聚类；然后固定样本，依次改变邻居数、RBF 带宽和图类型。画出相似图或嵌入散点图，记录ARI/轮廓系数与运行时间。&lt;/p>
+&lt;p>&lt;strong>阶段检查&lt;/strong>：能画出“数据 → 相似图 → 拉普拉斯 → 特征向量嵌入 → K-means”的流程，并解释谱聚类为什么可能找出非凸形状的组，以及它的性能为什么高度依赖图构造。&lt;/p>
+&lt;hr>
+&lt;h2 id="四第三阶段多视图数据融合与-embedding">四、第三阶段：多视图数据、融合与 embedding
+&lt;/h2>&lt;h3 id="41-先区分四个容易混用的词">4.1 先区分四个容易混用的词
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>视图（view）&lt;/strong>：对同一批对象的不同特征、来源、模态或关系描述。不同视图不必同维，但通常要能按样本对应起来。&lt;/li>
+&lt;li>&lt;strong>表示（representation）&lt;/strong>：供算法处理的特征、相似矩阵、图或聚类指示矩阵。&lt;/li>
+&lt;li>&lt;strong>嵌入（embedding）&lt;/strong>：把对象映射到一个新向量空间后的表示，可能用于降维、对齐或便于聚类。&lt;/li>
+&lt;li>&lt;strong>融合（fusion）&lt;/strong>：不同视图的信息在哪一步汇合。所谓“embedding 融合”可能指融合原始特征、视图潜向量、图结构，或每视图的簇分配，必须看论文的具体定义。&lt;/li>
+&lt;/ul>
+&lt;p>设有 \(V\) 个视图，常写成 \(X^{(v)}\in\mathbb{R}^{n\times d_v}\)。行对应相同 \(n\) 个样本，列数 \(d_v\) 可以不同。目标通常是让视图的互补信息帮助形成共同或相关的聚类结构，同时避免噪声视图压过其他视图。&lt;/p>
+&lt;p>多视图聚类综述把方法分为共训练/共正则、多核、图、子空间/矩阵分解、深度表示等不同路线；这些路线不仅网络结构不同，连它们实际融合的数据对象也不同。&lt;a class="link" href="https://doi.org/10.1109/TAI.2021.3065894" target="_blank" rel="noopener"
+>Chao, Sun &amp;amp; Bi, “A Survey on Multi-View Clustering,” IEEE Transactions on Artificial Intelligence, 2021&lt;/a>；&lt;a class="link" href="https://arxiv.org/abs/1712.06246" target="_blank" rel="noopener"
+>arXiv 公开版本&lt;/a>。&lt;/p>
+&lt;h3 id="42-用融合发生在哪里建立分类">4.2 用“融合发生在哪里”建立分类
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>路线&lt;/th>
+&lt;th>融合对象&lt;/th>
+&lt;th>直观做法&lt;/th>
+&lt;th>应重点问的问题&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>特征早期融合&lt;/td>
+&lt;td>原始特征或固定 embedding&lt;/td>
+&lt;td>标准化后拼接，再做 K-means / 谱聚类&lt;/td>
+&lt;td>维度、尺度、特征数是否让某个视图占优势？是否保留了各视图的特有信息？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>多视图 K-means / 共同簇指示&lt;/td>
+&lt;td>每视图到中心的误差、视图权重、共同标签&lt;/td>
+&lt;td>每视图使用自己的中心，同时优化共同分配或共识分配&lt;/td>
+&lt;td>视图权重怎么学？各视图是否必须完全同标签？离群点怎样影响？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>图 / 多核融合&lt;/td>
+&lt;td>每视图的相似矩阵、核矩阵或 Laplacian&lt;/td>
+&lt;td>先分别建图，再加权融合或协同做谱分解&lt;/td>
+&lt;td>图构造参数、权重学习和特征分解成本是什么？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>共正则谱聚类&lt;/td>
+&lt;td>每视图的谱嵌入 / 聚类假设&lt;/td>
+&lt;td>各视图分别保留结构，并惩罚它们的聚类结果不一致&lt;/td>
+&lt;td>哪些信息应共享，哪些 view-specific 差异不该被抹平？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>共同潜空间 / 子空间分解&lt;/td>
+&lt;td>学习出的低维 latent representation&lt;/td>
+&lt;td>通过 CCA、矩阵分解、自表达或深度网络得到对齐的潜表示&lt;/td>
+&lt;td>共同部分和特有部分如何区分？表示是否只学会了重构？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>晚期融合 / 共识聚类&lt;/td>
+&lt;td>各视图独立的簇标签或软分配&lt;/td>
+&lt;td>先分开聚类，再对分区投票、对齐或做共识优化&lt;/td>
+&lt;td>不同视图的簇编号排列不同，如何匹配？弱视图会否误导共识？&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>这些是帮助阅读的概念轴，不是互斥的算法标签。一篇论文可能同时学习嵌入、视图权重、图和最终共识分配。&lt;/p>
+&lt;h3 id="43-推荐阅读顺序">4.3 推荐阅读顺序
+&lt;/h3>&lt;p>&lt;strong>A. 先看一篇全景综述&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>**Chen et al., “Representation Learning in Multi-view Clustering: A Literature Review,” Data Science and Engineering, 2022。**用它厘清非表示学习 vs 表示学习、浅层图/子空间方法 vs 深度表示方法，并用目录反查你不熟悉的分支。&lt;a class="link" href="https://link.springer.com/article/10.1007/s41019-022-00190-8" target="_blank" rel="noopener"
+>Springer 开放全文&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>B. 用代表论文比较不同的融合位置&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>**Chaudhuri, Kakade, Livescu &amp;amp; Sridharan, “Multi-view Clustering via Canonical Correlation Analysis,” ICML 2009。**通过 CCA 构造低维投影，再聚类；重点是多视图相关结构怎样帮助降维，以及论文所依赖的条件独立假设。&lt;a class="link" href="https://icml.cc/Conferences/2009/papers/317.pdf" target="_blank" rel="noopener"
+>ICML 官方 PDF&lt;/a>；&lt;a class="link" href="https://doi.org/10.1145/1553374.1553391" target="_blank" rel="noopener"
+>ACM 出版信息&lt;/a>&lt;/li>
+&lt;li>**Kumar, Rai &amp;amp; Daumé, “Co-regularized Multi-view Spectral Clustering,” NeurIPS 2011。**每个视图各建图、各有谱聚类假设，再以共正则方式推动跨视图一致；用来连接上一阶段的谱聚类与多视图聚类。&lt;a class="link" href="https://proceedings.neurips.cc/paper_files/paper/2011/hash/31839b036f63806cba3f47b93af8ccb5-Abstract.html" target="_blank" rel="noopener"
+>NeurIPS 原始页面&lt;/a>；&lt;a class="link" href="https://proceedings.neurips.cc/paper_files/paper/2011/file/31839b036f63806cba3f47b93af8ccb5-Paper.pdf" target="_blank" rel="noopener"
+>官方 PDF&lt;/a>&lt;/li>
+&lt;li>**Cai, Nie &amp;amp; Huang, “Multi-View K-Means Clustering on Big Data,” IJCAI 2013。**考察共同簇指示和视图权重，了解多视图 K-means 与“拼接后普通 K-means”的差异。&lt;a class="link" href="https://www.ijcai.org/Proceedings/13/Papers/383.pdf" target="_blank" rel="noopener"
+>IJCAI 官方 PDF&lt;/a>&lt;/li>
+&lt;li>**Zhao, Ding &amp;amp; Fu, “Multi-View Clustering via Deep Matrix Factorization,” AAAI 2017。**用分层矩阵分解学习各视图表示，再让最终层的表示对齐，并使用图正则保留结构；是从浅层融合进入深度 embedding 的一个早期实例。&lt;a class="link" href="https://ojs.aaai.org/index.php/AAAI/article/view/10867" target="_blank" rel="noopener"
+>AAAI 官方页面和 PDF&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Kumar, Rai &amp;amp; Daumé (2011)&lt;/strong> 与 &lt;strong>Cai et al. (2013)&lt;/strong> 可组成很好的对照：一个主要协调视图的谱嵌入/聚类假设，一个直接建立多视图 K-means 目标并学习 view weight。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>C. 若想扩展到“视图之间到底学什么”&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Zhou &amp;amp; Burges, “Spectral Clustering and Transductive Learning with Multiple Views,” ICML 2007&lt;/strong>：看多张图的随机游走/归一化切割如何形成多视图谱方法。&lt;a class="link" href="https://www.microsoft.com/en-us/research/publication/spectral-clustering-transductive-learning-multiple-views/" target="_blank" rel="noopener"
+>Microsoft Research 原始项目页&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Wang, Nie &amp;amp; Huang, “Multi-View Clustering and Feature Learning via Structured Sparsity,” ICML 2013&lt;/strong>：视图或特征重要性可依簇而异，适合学习 view weighting 和 feature selection 的区别。&lt;a class="link" href="https://proceedings.mlr.press/v28/wang13c.html" target="_blank" rel="noopener"
+>PMLR 原始页面&lt;/a>&lt;/li>
+&lt;li>&lt;strong>Chao, Sun &amp;amp; Bi, “A Survey on Multi-View Clustering,” IEEE TAI 2021&lt;/strong>：作为分类索引，选择共训练、多核、图、矩阵分解、子空间、部分/不完整视图等分支深入。&lt;a class="link" href="https://arxiv.org/abs/1712.06246" target="_blank" rel="noopener"
+>作者公开预印本&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="44-多视图-embedding-的阅读检查表">4.4 多视图 embedding 的阅读检查表
+&lt;/h3>&lt;p>每读一篇论文，就填下面这张小表：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>问题&lt;/th>
+&lt;th>记录内容&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>输入是什么&lt;/td>
+&lt;td>每视图原始特征、预训练特征、相似矩阵/图，还是多模态原始数据？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>embedding 如何产生&lt;/td>
+&lt;td>PCA/CCA/矩阵分解/图谱/自编码器/对比学习/其他？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>embedding 对齐什么&lt;/td>
+&lt;td>坐标、相关性、邻域图、重构、簇指示，还是跨视图预测？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>共同与特有信息&lt;/td>
+&lt;td>是否显式区分 shared / private representation？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>融合在哪一步&lt;/td>
+&lt;td>特征、embedding、图、核、簇分布或标签？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>训练信号是什么&lt;/td>
+&lt;td>重构损失、聚类损失、图平滑、共识约束、对比目标、成对约束？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>缺失/噪声视图&lt;/td>
+&lt;td>是否假设所有样本都有所有视图？质量差的视图如何处理？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>推理时需要什么&lt;/td>
+&lt;td>新样本是否能映射到 embedding？还是只能对训练集做转导式聚类？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>计算代价&lt;/td>
+&lt;td>是否构造 \(n\times n\) 图或做特征分解？是否可扩展到大数据？&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="45-实践任务只改变融合机制">4.5 实践任务：只改变融合机制
+&lt;/h3>&lt;p>在同一组多视图数据上，先为每个视图分别做标准化，固定簇数、数据划分和随机种子，依次比较：&lt;/p>
+&lt;ol>
+&lt;li>单视图 K-means，作为每个视图自己的基线；&lt;/li>
+&lt;li>特征直接拼接 + K-means；&lt;/li>
+&lt;li>每视图相似图加权融合 + 谱聚类；&lt;/li>
+&lt;li>简单的聚类结果共识；&lt;/li>
+&lt;li>一个学习共同 embedding / 共同簇指示的方法。&lt;/li>
+&lt;/ol>
+&lt;p>记录每个视图的单独表现、聚合后表现、运行时间、不同种子稳定性，并做“一个视图加噪声”实验。不要只报告最好的那一种融合。这样才能看出提升来自信息互补、权重机制还是模型容量。&lt;/p>
+&lt;hr>
+&lt;h2 id="五第四阶段聚类实验与评价">五、第四阶段：聚类实验与评价
+&lt;/h2>&lt;h3 id="51-内部指标和外部指标回答不同的问题">5.1 内部指标和外部指标回答不同的问题
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>内部指标&lt;/strong>不使用真实标签，依据数据与预测簇的几何结构评价。例如 silhouette 衡量样本在本簇的紧密程度与最近其他簇的分离程度。&lt;/li>
+&lt;li>&lt;strong>外部指标&lt;/strong>需要真实标签，只用于评估聚类结果与参考分类的匹配程度。常用 ARI、NMI；聚类簇编号可任意置换，指标应对编号置换不敏感。&lt;/li>
+&lt;li>&lt;strong>稳定性&lt;/strong>看数据扰动、随机种子或预处理改变时，分区是否大致保持。&lt;/li>
+&lt;/ul>
+&lt;p>每类指标都有偏好；轮廓系数高不意味着发现了真实语义类别，ARI/NMI 高也只说明和给定标签一致。应同时看簇规模、可视化、运行稳定性和领域语义。可从 Rousseeuw 的 silhouette 原论文入手：&lt;a class="link" href="https://doi.org/10.1016/0377-0427%2887%2990125-7" target="_blank" rel="noopener"
+>“Silhouettes: A graphical aid to the interpretation and validation of cluster analysis,” 1987&lt;/a>。&lt;/p>
+&lt;h3 id="52-最低限度实验规范">5.2 最低限度实验规范
+&lt;/h3>&lt;ul>
+&lt;li>记录数据版本、预处理、随机种子、距离/相似度和全部超参数；&lt;/li>
+&lt;li>K-means 和初始化敏感的方法要多次运行并报均值与标准差；&lt;/li>
+&lt;li>多视图实验同时报告每视图基线与融合结果；&lt;/li>
+&lt;li>训练/选择超参数时不得使用测试标签；若数据带标签，明确哪些步骤只用于评价；&lt;/li>
+&lt;li>同时报告时间、内存或样本规模限制；&lt;/li>
+&lt;li>不用单个综合指标代替误差分析。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="六按-8-周执行的学习路线">六、按 8 周执行的学习路线
+&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>周次&lt;/th>
+&lt;th>主题&lt;/th>
+&lt;th>阅读/实践产物&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>1&lt;/td>
+&lt;td>聚类问题、距离、特征尺度、聚类评价&lt;/td>
+&lt;td>阅读 Jain；做距离与标准化小实验；写一页概念卡&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2&lt;/td>
+&lt;td>K-means 目标、Lloyd 迭代、初始化&lt;/td>
+&lt;td>读 MacQueen 选段、Lloyd 选段、K-means++ 摘要和算法；手算一个小例子&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>3&lt;/td>
+&lt;td>K-means 局限、簇数与稳定性&lt;/td>
+&lt;td>做合成数据、改变 K 和种子；记录失败案例&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>4&lt;/td>
+&lt;td>图论、相似图、拉普拉斯&lt;/td>
+&lt;td>读 von Luxburg 教程的图和拉普拉斯两节；手算一个 4–5 节点小图&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5&lt;/td>
+&lt;td>Cut 松弛与谱聚类算法&lt;/td>
+&lt;td>读教程的 RatioCut/Normalized Cut 与常见算法；画全流程图&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>6&lt;/td>
+&lt;td>多视图定义、早期/晚期融合&lt;/td>
+&lt;td>读 Chao 等综述导论与分类；对照特征拼接、图融合、簇结果融合&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>7&lt;/td>
+&lt;td>多视图谱聚类与多视图 K-means&lt;/td>
+&lt;td>读 Kumar 2011 与 Cai 2013；写出两个方法的“融合对象”对照表&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>8&lt;/td>
+&lt;td>共同 embedding 与实验复盘&lt;/td>
+&lt;td>读 CCA 2009、AAAI 2017 与 2022 表示综述；完成一个固定协议小实验并写复盘&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>每周建议留下 3 个东西：&lt;strong>一张概念图、一页公式/符号说明、一个能复现的实验结果&lt;/strong>。如果每周时间有限，先读教程指定章节和论文方法图，不必通读每篇引言里的引用链。&lt;/p>
+&lt;hr>
+&lt;h2 id="七读论文模板">七、读论文模板
+&lt;/h2>&lt;p>读每篇论文时用下面的提纲记一页笔记：&lt;/p>
+&lt;ol>
+&lt;li>论文要解决的具体聚类任务是什么？输入对象、视图和假设是什么？&lt;/li>
+&lt;li>输出是硬聚类、软分配、嵌入，还是多个分区？&lt;/li>
+&lt;li>核心目标函数每一项对应什么直觉？哪些是数据拟合，哪些是正则化？&lt;/li>
+&lt;li>表示/embedding 是怎样构造或学习出来的？在哪一步融合各个视图？&lt;/li>
+&lt;li>目标如何优化？是否有交替更新、近似或额外离散化？&lt;/li>
+&lt;li>算法需要簇数、相似度阈值、邻居数、视图权重等哪些超参数？&lt;/li>
+&lt;li>作者在哪些数据和指标上验证？对照和消融是否能支撑核心主张？&lt;/li>
+&lt;li>论文自己的局限是什么？我能设计什么实验验证它的边界？&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>不要从“论文说性能更好”开始记。先写它的假设、表示和优化对象。&lt;/strong>&lt;/p>
+&lt;hr>
+&lt;h2 id="八核心术语速查">八、核心术语速查
+&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>术语&lt;/th>
+&lt;th>简明解释&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>簇内平方和（WCSS / SSE）&lt;/td>
+&lt;td>每个样本到所属簇中心的平方距离总和，K-means 的典型目标&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>初始化&lt;/td>
+&lt;td>K-means 开始迭代前选择的初始中心；影响局部解和稳定性&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>相似图&lt;/td>
+&lt;td>把样本当作节点、样本相似度当作边权的图&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>度矩阵 \(D\)&lt;/td>
+&lt;td>对角矩阵，每个节点的度/总边权放在对角线上&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>图拉普拉斯 \(L\)&lt;/td>
+&lt;td>常见形式为 \(D-W\)，把图连接结构编码为矩阵&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>谱嵌入&lt;/td>
+&lt;td>用图拉普拉斯相关特征向量作为样本的新低维坐标&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>视图权重&lt;/td>
+&lt;td>某个融合目标中一个视图的相对贡献；不一定能解释为可靠性概率&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>共识聚类&lt;/td>
+&lt;td>从多个视图的分区或结构中求一份共同聚类结果&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>共同/特有表示&lt;/td>
+&lt;td>多视图共同潜变量与各视图独有结构的区分&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>早期/晚期融合&lt;/td>
+&lt;td>在特征/图等较早表示阶段融合，或在各自聚类之后融合结果&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>转导式/归纳式&lt;/td>
+&lt;td>转导方法围绕当前已见样本构图；归纳方法还要能把新样本映射到模型/嵌入&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="九可选的本地衔接阅读">九、可选的本地衔接阅读
+&lt;/h2>&lt;p>完成基础主线后，再读已有的相关资料，不需要现在同时展开：&lt;/p>
+&lt;ul>
+&lt;li>多视图与主动聚类阅读索引（&lt;code>工作文件/研究方向/相关论文阅读索引.md&lt;/code>）：把主动约束、半监督多视图与 LLM 辅助逐步接上。&lt;/li>
+&lt;li>TriGAC 学习笔记（&lt;code>工作文件/学习笔记/TriGAC学习笔记.md&lt;/code>）：看图构建、视图图、对象图和约束反馈怎样组合。&lt;/li>
+&lt;li>本地论文《Deep Multi-View Semi-Supervised Clustering with Sample Pairwise Constraints》（&lt;code>参考文献/主动约束与多视图聚类/2022_DMSC_arXiv_v2.pdf&lt;/code>）：作为共同表示学习与成对约束相结合的案例；这是 arXiv v2，不自动等同于期刊定稿。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="十读完后检查自己是否真的掌握">十、读完后检查自己是否真的掌握
+&lt;/h2>&lt;ol>
+&lt;li>K-means 的目标函数为什么自然对应“紧凑、近似球状”的簇？&lt;/li>
+&lt;li>K-means++ 改变的是 K-means 的目标函数还是初始化？&lt;/li>
+&lt;li>K-means 和谱聚类分别在哪里定义“相似”？&lt;/li>
+&lt;li>谱聚类里的 K-means 为什么不能被简单删掉？它吃进去的向量与原始特征有什么不同？&lt;/li>
+&lt;li>图拉普拉斯的零特征值/特征向量与连通分量有什么关系？&lt;/li>
+&lt;li>多视图直接拼接在什么情况下会偏向某个视图？&lt;/li>
+&lt;li>共正则谱聚类、多视图 K-means、深度共同 embedding 分别融合了什么对象？&lt;/li>
+&lt;li>多视图一致是否一定意味着正确？怎样构造一个反例？&lt;/li>
+&lt;li>有标签和无标签时分别可用什么类型的评价指标？&lt;/li>
+&lt;li>如果一个方法只在某个预处理和固定随机种子下表现好，你会怎样检查它的结论是否稳健？&lt;/li>
+&lt;/ol>
+&lt;p>能结合一张公式、一个 toy example 和一个论文方法图回答这些问题，就可以开始有目的地阅读多视图聚类新论文了。&lt;/p></description></item><item><title>睿信书院综测及竞赛报名指南</title><link>https://pottarzake.github.io/post/ruixin-competition/</link><pubDate>Tue, 08 Sep 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/ruixin-competition/</guid><description>&lt;blockquote>
 &lt;p>&lt;strong>适用对象&lt;/strong>：北京理工大学睿信书院学生，可作为科学素养与综测赛事参考。&lt;/p>&lt;/blockquote>
 &lt;blockquote>
 &lt;p>&lt;strong>信息口径&lt;/strong>：赛事部分依据《睿信书院科学素养综测赛事名单-1.xlsx》（固定赛事 90 项、动态赛事 109 项）全量整理；综测规则部分依据睿信书院《本科生综合测评及评奖评优管理办法（试行）》（2025 年 12 月）及 2025-2026-2 学期两份填写说明整理。&lt;/p>&lt;/blockquote>
