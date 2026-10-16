@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zake 的个人博客</title><link>https://pottarzake.github.io/</link><description>Recent content on Zake 的个人博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 Oct 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://pottarzake.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>聚类学习：从 K-means、谱聚类到多视角表示</title><link>https://pottarzake.github.io/post/clustering-guide/</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/clustering-guide/</guid><description>&lt;h2 id="写在前面">写在前面
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zake 的个人博客</title><link>https://pottarzake.github.io/</link><description>Recent content on Zake 的个人博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Mon, 12 Oct 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://pottarzake.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>聚类学习：从 K-means、谱聚类到多视角表示</title><link>https://pottarzake.github.io/post/clustering-guide/</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/clustering-guide/</guid><description>&lt;img src="https://pottarzake.github.io/post/clustering-guide/cover.png" alt="Featured image of post 聚类学习：从 K-means、谱聚类到多视角表示" />&lt;h2 id="写在前面">写在前面
 &lt;/h2>&lt;p>这份指南以系统建立聚类知识为主线，涵盖聚类问题与数学基础、K-means、谱聚类、多视图融合/embedding、评价方法、8 周学习路线和自测题。项目现有研究资料仅列在最后作为可选衔接阅读。&lt;/p>
 &lt;blockquote>
 &lt;p>&lt;strong>目标读者&lt;/strong>：已经接触机器学习基本概念，希望把聚类方法从&amp;quot;会调用&amp;quot;学到&amp;quot;看懂假设、目标函数、表示空间与实验&amp;quot;。&lt;/p>
@@ -412,7 +412,227 @@
 &lt;li>本地论文《Deep Multi-View Semi-Supervised Clustering with Sample Pairwise Constraints》（&lt;code>参考文献/主动约束与多视图聚类/2022_DMSC_arXiv_v2.pdf&lt;/code>）：作为共同表示学习与成对约束相结合的案例；这是 arXiv v2，不自动等同于期刊定稿。&lt;/li>
 &lt;/ul>
 &lt;hr>
-&lt;h2 id="十读完后检查自己是否真的掌握">十、读完后检查自己是否真的掌握
+&lt;h2 id="十前沿专题开放语义与多层多粒度-embedding检索截至-2026-10-16">十、前沿专题：开放语义与多层/多粒度 embedding（检索截至 2026-10-16）
+&lt;/h2>&lt;p>本节是在 K-means、谱聚类和多视图基础上的专题延伸。这里的“开放语义聚类”不是一个单一标准任务：要先问标签是否部分可用、未知类是否混入已知类、类别词汇是否预先固定，以及目标是给样本分组还是给像素/区域分割。读论文时务必按任务设定比较，不能把不同 benchmark 的指标直接横向排名。&lt;/p>
+&lt;h3 id="101-前沿方向地图">10.1 前沿方向地图
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>方向&lt;/th>
+&lt;th>核心问题&lt;/th>
+&lt;th>代表进展与阅读入口&lt;/th>
+&lt;th>与经典聚类的连接&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>开放世界类别发现（NCD/GCD）&lt;/td>
+&lt;td>一部分已标注已知类，未标注数据同时含已知类与新类；新类数和分配也可能未知&lt;/td>
+&lt;td>先读综述 &lt;a class="link" href="https://arxiv.org/abs/2509.22542" target="_blank" rel="noopener"
+>Category Discovery: An Open-World Perspective（arXiv v2, 2025）&lt;/a>，再读 &lt;a class="link" href="https://openaccess.thecvf.com/content/CVPR2022/html/Vaze_Generalized_Category_Discovery_CVPR_2022_paper.html" target="_blank" rel="noopener"
+>Generalized Category Discovery（CVPR 2022）&lt;/a>&lt;/td>
+&lt;td>将“学习表示、分配标签、估计类别数”拆成三个可分析模块；GCD 是部分监督下聚类已知/新类混合数据的典型基准&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>显式语义概念与视觉语言 embedding&lt;/td>
+&lt;td>如何让新簇不只是几何上紧凑，还能锚定到可解释的文本概念&lt;/td>
+&lt;td>&lt;a class="link" href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/1ece70d2259b8e9510e2d4ca8754cecf-Abstract-Conference.html" target="_blank" rel="noopener"
+>SpectralGCD（ICLR 2026）&lt;/a>用 CLIP 图文相似度形成概念表示，并筛选相关概念&lt;/td>
+&lt;td>类似先构造语义特征/相似图再聚类，但词典覆盖、概念粒度及视觉语言模型偏差成为新假设&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>组合式与局部粒度发现&lt;/td>
+&lt;td>新类别是否可由已知的局部视觉 primitives 新组合而成？&lt;/td>
+&lt;td>&lt;a class="link" href="https://proceedings.mlr.press/v306/tang26ai.html" target="_blank" rel="noopener"
+>CoGe-GCD（ICML 2026）&lt;/a>先组织 patch tokens 与 primitives，再处理未见组合&lt;/td>
+&lt;td>把样本级单向量扩展成 token/patch 局部结构；关注组合泛化，而不只优化全局类中心&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>LLM 反馈、簇命名与人机协同&lt;/td>
+&lt;td>如何给簇生成语义描述，并用描述修正模糊样本/类别边界&lt;/td>
+&lt;td>&lt;a class="link" href="https://aclanthology.org/2026.eacl-long.358/" target="_blank" rel="noopener"
+>Active Generalized Category Discovery with Diverse LLM Feedback（EACL 2026）&lt;/a>把 LLM 用于特征增强、类别描述生成和不确定样本对齐&lt;/td>
+&lt;td>聚类之外增加语义解释与反馈闭环；应把“分组质量”和“命名质量”分开评估，防止语言流畅掩盖错分&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>跨模态/模态无关类别发现&lt;/td>
+&lt;td>图像、文本、音频、遥感等能否共用发现框架？&lt;/td>
+&lt;td>&lt;a class="link" href="https://openaccess.thecvf.com/content/CVPR2026F/html/Shipard_OmniGCD_Abstracting_Generalized_Category_Discovery_for_Modality_Agnosticism_CVPRF_2026_paper.html" target="_blank" rel="noopener"
+>OmniGCD（CVPR Findings 2026）&lt;/a>研究跨模态统一潜空间和零样本 GCD；该论文属于 Findings track&lt;/td>
+&lt;td>将多视图从同一对象的多个特征源，推进到不同模态 encoder 与共享空间；须审查模态对齐是否丢失视图特有信息&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>语义层级与多尺度文本 embedding&lt;/td>
+&lt;td>同一文本如何支持故事、主题、宏观议题等不同层次分组？&lt;/td>
+&lt;td>&lt;a class="link" href="https://aclanthology.org/2025.acl-long.124/" target="_blank" rel="noopener"
+>Hierarchical Level-Wise News Article Clustering via Multilingual Matryoshka Embeddings（ACL 2025）&lt;/a>用 embedding 的维度前缀表达不同相似粒度，再做层级聚类&lt;/td>
+&lt;td>与层次聚类结合；这里的“多层”指向量维度前缀的多尺度语义，不是 Transformer 中间层&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Transformer 跨层特征与开放词汇空间语义&lt;/td>
+&lt;td>中间层是否保留更好的局部/空间信息？&lt;/td>
+&lt;td>&lt;a class="link" href="https://openaccess.thecvf.com/content/ICCV2025/html/Sun_CLIPer_Hierarchically_Improving_Spatial_Representation_of_CLIP_for_Open-Vocabulary_Semantic_ICCV_2025_paper.html" target="_blank" rel="noopener"
+>CLIPer（ICCV 2025）&lt;/a>融合较早层信息以改善开放词汇分割空间表征&lt;/td>
+&lt;td>与“不同模型层的特征融合”相关，但论文任务是像素分割，作为空间语义表示的邻接研究，不等于样本聚类&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>物体/事件粒度的自监督聚类表征&lt;/td>
+&lt;td>如何将图像物体与视频事件的不同时间尺度统一进表示学习？&lt;/td>
+&lt;td>&lt;a class="link" href="https://papers.neurips.cc/paper_files/paper/2025/hash/69b6de0de842bfedbc40ed6e162b4233-Abstract-Conference.html" target="_blank" rel="noopener"
+>UniViT（NeurIPS 2025）&lt;/a>将对象级和事件级聚类用于图像/视频编码器学习&lt;/td>
+&lt;td>关注聚类作为预训练信号；需要区分“用聚类训练 embedding”和“最终研究目标是聚类”&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>&lt;strong>阅读状态说明&lt;/strong>：上述会议论文按其正式 proceedings 页面著录；Open-world Perspective 是 arXiv v2 综述预印本，读时核对版本日期。论文摘要中的性能结论只代表其文中数据集、协议和基线，不等于不同论文间的统一比较。本指南不将摘要里的 SOTA 自述作为独立结论。&lt;/p>&lt;/blockquote>
+&lt;h3 id="102-多层-embedding四种含义先辨清再比较">10.2 “多层 embedding”四种含义，先辨清再比较
+&lt;/h3>&lt;ol>
+&lt;li>&lt;strong>类别/主题层级&lt;/strong>：簇之间有父子关系，例如故事 → 主题 → 议题；问题是层级树/有向无环图如何定义与评价。&lt;/li>
+&lt;li>&lt;strong>向量维度多尺度（Matryoshka）&lt;/strong>：同一向量的短前缀和长前缀对应不同精细度；关注前缀训练目标、不同维数的聚类稳定性，以及层级聚类如何利用这种结构。&lt;/li>
+&lt;li>&lt;strong>局部到全局粒度&lt;/strong>：patch/token → 物体/区域 → 整图或视频事件；关心局部原语、空间/时间关系和组合泛化。&lt;/li>
+&lt;li>&lt;strong>Transformer 网络层级特征&lt;/strong>：融合浅层与深层 hidden states/attention；较早层可能保留局部结构，较深层偏语义抽象。需通过层消融与对齐分析证明收益，不可仅因“层数多”就称多视图聚类。&lt;/li>
+&lt;/ol>
+&lt;p>这些方向可组合，但彼此不等价。尤其是“多视图”表示多个对齐的数据源/模态；同一个 encoder 的多个层输出是否构成多个 view，要看算法是否显式建模视图特有结构、对齐或融合，而不是只把特征拼起来。&lt;/p>
+&lt;h3 id="103-建议的专题学习路线">10.3 建议的专题学习路线
+&lt;/h3>&lt;ol>
+&lt;li>&lt;strong>建立任务定义&lt;/strong>：先读 Open-World Perspective 的 NCD/GCD 分类，写清已知类、未知类、标签预算、未知类数和推理时新样本要求。&lt;/li>
+&lt;li>&lt;strong>回到基准方法&lt;/strong>：读 GCD 2022，复现其“监督已知类 + 对比表示 + 未标注数据分配”的思想；把 backbone、聚类分配、类别数估计拆开记录。&lt;/li>
+&lt;li>&lt;strong>加入语义锚点&lt;/strong>：读 SpectralGCD，画出图像 embedding、文本概念词典、跨模态相似度与概念筛选的流程。问词典漏掉真实语义时会发生什么。&lt;/li>
+&lt;li>&lt;strong>从整样本走向局部结构&lt;/strong>：读 CoGe-GCD，追踪 patch → primitive → 新组合类别，比较全局 pooled embedding 与局部 token 表示。&lt;/li>
+&lt;li>&lt;strong>加入人类可读语义&lt;/strong>：读 EACL 2026 的 LLM feedback 论文，分别评价簇标签可读性、实例分配准确性和 LLM 反馈成本/错误传播。&lt;/li>
+&lt;li>&lt;strong>专题分流&lt;/strong>：文本主题层次读 ACL Matryoshka；视觉空间语义读 CLIPer；视频/物体级自监督读 UniViT；跨模态泛化读 OmniGCD。它们的任务与指标不同，不应揉成一个性能榜。&lt;/li>
+&lt;li>&lt;strong>综合实验设计&lt;/strong>：固定数据与 backbone，对比 K-means / 谱聚类或 GCD 分配、单一全局 embedding / 局部多粒度 / 多模态概念 embedding；多随机种子报告聚类质量、未知类数误差、语义命名质量、稳健性与成本。&lt;/li>
+&lt;/ol>
+&lt;h3 id="104-专题论文笔记表">10.4 专题论文笔记表
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>维度&lt;/th>
+&lt;th>记录问题&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>任务设定&lt;/td>
+&lt;td>NCD、GCD、开放词汇分割、层级主题聚类还是自监督预训练？哪些类被标注，哪些类未知？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>聚类单元&lt;/td>
+&lt;td>文档、整图、区域、patch、视频片段还是跨模态对象？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>表示层次&lt;/td>
+&lt;td>输入特征、全局向量、Matryoshka 前缀、Transformer hidden state、token/patch 原语或共享模态空间？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>语义来源&lt;/td>
+&lt;td>固定标签、文本提示、概念词典、LLM 生成描述、人类反馈还是纯几何结构？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>聚类机制&lt;/td>
+&lt;td>K-means、谱嵌入、密度/均值漂移、原型分配、层次聚类或其他？簇数怎样确定？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>对照是否公平&lt;/td>
+&lt;td>backbone、预训练数据、标签预算、类别划分、推理信息和算力是否一致？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>语义评价&lt;/td>
+&lt;td>只评聚类标签一致性，还是另评簇名准确度、描述忠实度和层级一致性？&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>局限&lt;/td>
+&lt;td>类别词表封闭、长尾、跨域、概念歧义、层级不稳定、模态偏差、LLM 错误或计算成本？&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="105-论文全文与官方来源">10.5 论文全文与官方来源
+&lt;/h3>&lt;p>以下为本节涉及的论文出处（检索截至 2026-10-16）。建议先读综述与 GCD 基准，再选一条方向深入；分割论文和自监督预训练论文作为邻接材料。&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>论文&lt;/th>
+&lt;th>版本/状态&lt;/th>
+&lt;th>主题&lt;/th>
+&lt;th>全文&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Category Discovery: An Open-World Perspective&lt;/td>
+&lt;td>arXiv v2 综述预印本，2025-09-29 更新&lt;/td>
+&lt;td>NCD/GCD 与开放世界类别发现 taxonomy&lt;/td>
+&lt;td>&lt;a class="link" href="https://arxiv.org/abs/2509.22542" target="_blank" rel="noopener"
+>arXiv:2509.22542&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Generalized Category Discovery&lt;/td>
+&lt;td>CVPR 2022&lt;/td>
+&lt;td>开放世界 GCD 基准问题定义&lt;/td>
+&lt;td>&lt;a class="link" href="https://openaccess.thecvf.com/content/CVPR2022/html/Vaze_Generalized_Category_Discovery_CVPR_2022_paper.html" target="_blank" rel="noopener"
+>CVF Open Access&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>SpectralGCD&lt;/td>
+&lt;td>ICLR 2026&lt;/td>
+&lt;td>概念词典、图文语义与跨模态表示&lt;/td>
+&lt;td>&lt;a class="link" href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/1ece70d2259b8e9510e2d4ca8754cecf-Abstract-Conference.html" target="_blank" rel="noopener"
+>ICLR Proceedings&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CoGe-GCD&lt;/td>
+&lt;td>ICML 2026 / PMLR 306&lt;/td>
+&lt;td>patch primitives 与组合式新类发现&lt;/td>
+&lt;td>&lt;a class="link" href="https://proceedings.mlr.press/v306/tang26ai.html" target="_blank" rel="noopener"
+>PMLR v306&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Active Generalized Category Discovery with Diverse LLM Feedback&lt;/td>
+&lt;td>EACL 2026 / ACL Anthology&lt;/td>
+&lt;td>LLM 反馈、类别描述与不确定实例对齐&lt;/td>
+&lt;td>&lt;a class="link" href="https://aclanthology.org/2026.eacl-long.358/" target="_blank" rel="noopener"
+>ACL Anthology&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>OmniGCD&lt;/td>
+&lt;td>CVPR Findings 2026&lt;/td>
+&lt;td>模态无关的类别发现&lt;/td>
+&lt;td>&lt;a class="link" href="https://openaccess.thecvf.com/content/CVPR2026F/html/Shipard_OmniGCD_Abstracting_Generalized_Category_Discovery_for_Modality_Agnosticism_CVPRF_2026_paper.html" target="_blank" rel="noopener"
+>CVF Open Access&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Hierarchical Level-Wise News Article Clustering via Multilingual Matryoshka Embeddings&lt;/td>
+&lt;td>ACL 2025&lt;/td>
+&lt;td>多语言 Matryoshka embedding 与层次文本聚类&lt;/td>
+&lt;td>&lt;a class="link" href="https://aclanthology.org/2025.acl-long.124/" target="_blank" rel="noopener"
+>ACL Anthology&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>CLIPer&lt;/td>
+&lt;td>ICCV 2025&lt;/td>
+&lt;td>跨 Transformer 层特征与开放词汇空间语义；邻接任务为分割&lt;/td>
+&lt;td>&lt;a class="link" href="https://openaccess.thecvf.com/content/ICCV2025/html/Sun_CLIPer_Hierarchically_Improving_Spatial_Representation_of_CLIP_for_Open-Vocabulary_Semantic_ICCV_2025_paper.html" target="_blank" rel="noopener"
+>CVF Open Access&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>UniViT&lt;/td>
+&lt;td>NeurIPS 2025&lt;/td>
+&lt;td>对象/事件层聚类作为视觉视频自监督表征信号&lt;/td>
+&lt;td>&lt;a class="link" href="https://papers.neurips.cc/paper_files/paper/2025/hash/69b6de0de842bfedbc40ed6e162b4233-Abstract-Conference.html" target="_blank" rel="noopener"
+>NeurIPS Proceedings&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>PixelCLIP&lt;/td>
+&lt;td>arXiv 预印本 2409.19846（请核对正式版本）&lt;/td>
+&lt;td>无语义标签的开放词汇像素聚类/分割；相邻任务&lt;/td>
+&lt;td>&lt;a class="link" href="https://arxiv.org/abs/2409.19846" target="_blank" rel="noopener"
+>arXiv:2409.19846&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="十一读完后检查自己是否真的掌握">十一、读完后检查自己是否真的掌握
 &lt;/h2>&lt;ol>
 &lt;li>K-means 的目标函数为什么自然对应“紧凑、近似球状”的簇？&lt;/li>
 &lt;li>K-means++ 改变的是 K-means 的目标函数还是初始化？&lt;/li>
@@ -425,7 +645,7 @@
 &lt;li>有标签和无标签时分别可用什么类型的评价指标？&lt;/li>
 &lt;li>如果一个方法只在某个预处理和固定随机种子下表现好，你会怎样检查它的结论是否稳健？&lt;/li>
 &lt;/ol>
-&lt;p>能结合一张公式、一个 toy example 和一个论文方法图回答这些问题，就可以开始有目的地阅读多视图聚类新论文了。&lt;/p></description></item><item><title>睿信书院综测及竞赛报名指南</title><link>https://pottarzake.github.io/post/ruixin-competition/</link><pubDate>Tue, 08 Sep 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/ruixin-competition/</guid><description>&lt;blockquote>
+&lt;p>能结合一张公式、一个 toy example 和一个论文方法图回答这些问题，就可以开始有目的地阅读多视图聚类新论文了。&lt;/p></description></item><item><title>睿信书院综测及竞赛报名指南</title><link>https://pottarzake.github.io/post/ruixin-competition/</link><pubDate>Tue, 08 Sep 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/ruixin-competition/</guid><description>&lt;img src="https://pottarzake.github.io/post/ruixin-competition/cover.png" alt="Featured image of post 睿信书院综测及竞赛报名指南" />&lt;blockquote>
 &lt;p>&lt;strong>适用对象&lt;/strong>：北京理工大学睿信书院学生，可作为科学素养与综测赛事参考。&lt;/p>&lt;/blockquote>
 &lt;blockquote>
 &lt;p>&lt;strong>信息口径&lt;/strong>：赛事部分依据《睿信书院科学素养综测赛事名单-1.xlsx》（固定赛事 90 项、动态赛事 109 项）全量整理；综测规则部分依据睿信书院《本科生综合测评及评奖评优管理办法（试行）》（2025 年 12 月）及 2025-2026-2 学期两份填写说明整理。&lt;/p>&lt;/blockquote>
@@ -1876,7 +2096,7 @@
 &lt;li>本文所载报名时间与费用为 2026-09 依据最近一至两届官方及高校公开通知归纳，&lt;strong>不能保证与当届完全一致&lt;/strong>；标注&amp;quot;待核实／待公布&amp;quot;的项目以当届官网章程为准。&lt;/li>
 &lt;li>综测加分级别的最终认定，以《睿信书院科学素养综测赛事名单》及书院、学校当年度发布的细则为准。&lt;/li>
 &lt;li>校内权威发布渠道：校教务处 jwb.bit.edu.cn；各赛事官网见上表。&lt;/li>
-&lt;/ul></description></item><item><title>BIT大一信科全流程整理</title><link>https://pottarzake.github.io/post/bit-guide/</link><pubDate>Tue, 14 Jul 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/bit-guide/</guid><description>&lt;h1 id="前言">前言
+&lt;/ul></description></item><item><title>BIT大一信科全流程整理</title><link>https://pottarzake.github.io/post/bit-guide/</link><pubDate>Tue, 14 Jul 2026 10:00:00 +0800</pubDate><guid>https://pottarzake.github.io/post/bit-guide/</guid><description>&lt;img src="https://pottarzake.github.io/post/bit-guide/cover.png" alt="Featured image of post BIT大一信科全流程整理" />&lt;h1 id="前言">前言
 &lt;/h1>&lt;p>&lt;strong>在大学的生活真让人觉得，哪天微信会发来班主任的通知，告诉我从明天开始体验活动结束，照常上课。但不管怎么样，确实是新的生活和学习节奏。&lt;/strong>&lt;/p>
 &lt;p>虽然最终我的成绩不算优秀，但机缘巧合，认识的学长很多。每当学期中遇到困难、困扰，总能从各路大神手里获得些什么，开始去解决面对的问题。也感谢各位学长学姐对我的帮助，你们的关照帮助我度过了大学最无助的那段时光。&lt;/p>
 &lt;p>我是一个爱胡思乱想的人，这篇博客既整理资料，也整理一些我的思考，希望能在你需要的时候，给你一些帮助。&lt;/p>
@@ -2103,4 +2323,4 @@ data-flex-basis="332px"
 &lt;p>&lt;a class="link" href="https://www.bilibili.com/video/BV14XLq64EQf/" target="_blank" rel="noopener"
 >关于“活着”，我们问了问余华&lt;/a>&lt;/p>
 &lt;p>最后，衷心感谢这一年里每一位帮助我的老师、学长学姐、每位与我共同前行的朋友们，是你们帮助我度过了那段孤独困苦的时光。也希望这篇杂谈可以帮助你多一个看待世界的角度。&lt;/p>
-&lt;p>欢迎转发这一篇博客。这篇博客的灵感来自ovideros学长。如果有机会，你也可以在未来的某一天，写下自己的故事。&lt;/p></description></item><item><title>Hello Hugo</title><link>https://pottarzake.github.io/post/hello-hugo/</link><pubDate>Sun, 25 Jan 2026 17:10:37 +0800</pubDate><guid>https://pottarzake.github.io/post/hello-hugo/</guid><description>&lt;p>希望这份温情能跨越时间，带给迷茫的你一丝方向。&lt;/p></description></item></channel></rss>
+&lt;p>欢迎转发这一篇博客。这篇博客的灵感来自ovideros学长。如果有机会，你也可以在未来的某一天，写下自己的故事。&lt;/p></description></item><item><title>Hello Hugo</title><link>https://pottarzake.github.io/post/hello-hugo/</link><pubDate>Sun, 25 Jan 2026 17:10:37 +0800</pubDate><guid>https://pottarzake.github.io/post/hello-hugo/</guid><description>&lt;img src="https://pottarzake.github.io/post/hello-hugo/cover.png" alt="Featured image of post Hello Hugo" />&lt;p>希望这份温情能跨越时间，带给迷茫的你一丝方向。&lt;/p></description></item></channel></rss>
