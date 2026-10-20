@@ -3,11 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Yudong Wang is an undergraduate student at Beijing Institute of Technology, interested in computer vision, image and video processing, and computational photography.">
+  <meta name="description" content="Yudong Wang (Zake) is an undergraduate in computer science at Beijing Institute of Technology, working on computer vision, visual anomaly detection, and image and video processing.">
   <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#11141b" media="(prefers-color-scheme: dark)">
-  <title>Yudong Wang · Undergraduate Academic Profile</title>
+  <title>Yudong Wang · Computer Vision Undergraduate · BIT</title>
   <link rel="canonical" href="https://pottarzake.github.io/about/">
+  <link rel="alternate" type="application/rss+xml" href="/index.xml" title="Zake 的个人博客">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Yudong Wang · Computer Vision Undergraduate at BIT">
+  <meta property="og:description" content="Undergraduate in computer science at Beijing Institute of Technology. Building and studying computer vision systems — from 4K industrial anomaly detection to interactive narrative prototypes.">
+  <meta property="og:url" content="https://pottarzake.github.io/about/">
+  <meta property="og:site_name" content="Zake · Academic Profile">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Yudong Wang · Computer Vision Undergraduate at BIT">
+  <meta name="twitter:description" content="Undergraduate in computer science at Beijing Institute of Technology, working on computer vision, visual anomaly detection, and image and video processing.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yudong Wang",
+    "alternateName": "Zake",
+    "url": "https://pottarzake.github.io/",
+    "email": "mailto:1120251409@bit.edu.cn",
+    "jobTitle": "Undergraduate Student",
+    "affiliation": {
+      "@type": "CollegeOrUniversity",
+      "name": "Beijing Institute of Technology",
+      "department": "School of Computer Science and Technology"
+    },
+    "sameAs": [
+      "https://github.com/pottarzake",
+      "https://orcid.org/0009-0000-7332-2033",
+      "https://pottarzake.github.io/"
+    ],
+    "knowsAbout": [
+      "Computer Vision",
+      "Visual Anomaly Detection",
+      "Image and Video Processing",
+      "Computational Photography",
+      "PyTorch",
+      "OpenCV"
+    ]
+  }
+  </script>
   <style>
     :root {
       color-scheme: light dark;
@@ -21,9 +61,6 @@
       --accent: #2864dc;
       --accent-strong: #1749ad;
       --accent-soft: #e9f0ff;
-      --placeholder-bg: #fff7d8;
-      --placeholder-border: #c38a12;
-      --placeholder-text: #694800;
       --shadow: 0 16px 42px rgba(31, 43, 73, 0.08);
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -203,8 +240,15 @@
 
     .affiliation {
       max-width: 720px;
-      margin-bottom: 26px;
+      margin-bottom: 14px;
       color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .lede {
+      max-width: 680px;
+      margin-bottom: 26px;
+      color: var(--text);
       font-size: 1.02rem;
     }
 
@@ -274,37 +318,205 @@
       flex: 0 0 auto;
     }
 
-    .draft-notice {
+    .focus-band {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: 12px;
-      margin: 0 0 32px;
-      padding: 16px 18px;
-      border: 1px dashed var(--placeholder-border);
+      gap: 13px;
+      margin: 0 0 26px;
+      padding: 15px 18px;
+      border: 1px solid var(--hairline);
+      border-left: 3px solid var(--accent);
       border-radius: var(--radius-md);
-      background: var(--placeholder-bg);
-      color: var(--placeholder-text);
-      font-size: 0.92rem;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.93rem;
     }
 
-    .draft-notice strong {
-      display: block;
-      margin-bottom: 2px;
+    .focus-band strong {
+      color: var(--text-strong);
     }
 
-    .draft-notice p {
+    .focus-band p {
       margin: 0;
     }
 
-    .notice-mark {
+    .focus-mark {
       display: grid;
-      width: 28px;
-      height: 28px;
-      border: 1px solid currentcolor;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
       place-items: center;
+      font-size: 0.62rem;
       font-weight: 850;
-      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .interest-list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      gap: 15px;
+      list-style: none;
+      color: var(--muted);
+    }
+
+    .interest-list strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--text-strong);
+      font-weight: 700;
+    }
+
+    .interest-list span {
+      display: block;
+      font-size: 0.96rem;
+    }
+
+    .project + .project {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .project-head {
+      display: flex;
+      margin-bottom: 8px;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .project-head h3 {
+      margin-bottom: 3px;
+      font-size: 1.1rem;
+    }
+
+    .project-meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+    }
+
+    .project-link {
+      display: inline-flex;
+      min-height: 32px;
+      padding: 5px 11px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      align-items: center;
+      color: var(--text-strong);
+      font-size: 0.8rem;
+      font-weight: 720;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: border-color 160ms ease, color 160ms ease;
+    }
+
+    .project-link:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    .project > p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .project-points {
+      display: grid;
+      margin: 11px 0 0;
+      padding-left: 1.15rem;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .project-points li::marker {
+      color: var(--accent);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      gap: 6px;
+    }
+
+    .tags span {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 0.72rem;
+      font-weight: 720;
+      letter-spacing: 0.02em;
+    }
+
+    .writing-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .writing-list li + li {
+      border-top: 1px solid var(--hairline);
+    }
+
+    .writing-list a {
+      display: grid;
+      padding: 13px 2px;
+      gap: 3px;
+      color: var(--text-strong);
+      text-decoration: none;
+    }
+
+    .writing-list a:hover .writing-title {
+      color: var(--accent-strong);
+    }
+
+    .writing-title {
+      font-size: 0.98rem;
+      font-weight: 680;
+      line-height: 1.4;
+    }
+
+    .writing-meta {
+      color: var(--muted);
+      font-size: 0.79rem;
+      font-weight: 620;
+    }
+
+    .skill-list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .skill-list li {
+      display: grid;
+      gap: 2px;
+    }
+
+    .skill-list strong {
+      color: var(--muted);
+      font-size: 0.71rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .skill-list span {
+      color: var(--text-strong);
+      font-size: 0.93rem;
+      font-weight: 620;
+      line-height: 1.45;
     }
 
     .page-grid {
@@ -373,41 +585,14 @@
       font-size: 1.03rem;
     }
 
-    .placeholder {
-      display: inline;
-      padding: 0.1em 0.38em;
-      border: 1px dashed var(--placeholder-border);
-      border-radius: 5px;
-      background: var(--placeholder-bg);
-      color: var(--placeholder-text);
-      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-      font-size: 0.88em;
-      font-weight: 720;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
+    .about-copy strong {
+      color: var(--text-strong);
     }
 
-    h1 .placeholder {
-      padding: 0.05em 0.16em;
-      border-width: 2px;
-      border-radius: 8px;
-      font-size: 0.78em;
-    }
-
-    .empty-state {
-      padding: 20px;
-      border: 1px dashed var(--hairline);
-      border-radius: var(--radius-sm);
-      background: var(--surface-soft);
-      color: var(--muted);
-    }
-
-    .empty-state p {
-      margin-bottom: 8px;
-    }
-
-    .empty-state p:last-child {
-      margin-bottom: 0;
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .meta-list {
@@ -494,7 +679,8 @@
     }
 
     @media (max-width: 840px) {
-      .nav-links li:not(:last-child) {
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(4) {
         display: none;
       }
 
@@ -550,8 +736,9 @@
         justify-content: center;
       }
 
-      .draft-notice {
-        grid-template-columns: 1fr;
+      .project-head {
+        flex-direction: column;
+        gap: 8px;
       }
 
       .card {
@@ -578,9 +765,6 @@
         --accent: #8eb5ff;
         --accent-strong: #a9c6ff;
         --accent-soft: #202f4c;
-        --placeholder-bg: #332b14;
-        --placeholder-border: #d8a53e;
-        --placeholder-text: #ffda86;
         --shadow: 0 18px 52px rgba(0, 0, 0, 0.28);
       }
 
@@ -611,11 +795,6 @@
       .contact-links a {
         border-width: 2px;
       }
-
-      .placeholder {
-        border-style: solid;
-        border-width: 2px;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -641,8 +820,6 @@
         --hairline: #bbbbbb;
         --accent: #1749ad;
         --accent-strong: #1749ad;
-        --placeholder-bg: #ffffff;
-        --placeholder-text: #5e4200;
       }
 
       .site-header,
@@ -683,6 +860,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#work">Work</a></li>
+        <li><a href="#writing">Writing</a></li>
         <li><a href="/">Blog ↗</a></li>
       </ul>
     </nav>
@@ -693,8 +871,9 @@
       <div>
         <p class="eyebrow">Undergraduate Academic Profile</p>
         <h1 id="profile-name">Yudong Wang</h1>
-        <p class="role">Undergraduate Student</p>
+        <p class="role">Undergraduate · Computer Science</p>
         <p class="affiliation">School of Computer Science and Technology<br>Beijing Institute of Technology</p>
+        <p class="lede">I study and build computer vision systems that have to hold up on real images — most recently pixel-level foreign-object detection on 4K industrial scans.</p>
         <div class="actions" aria-label="Profile links">
           <a class="button primary" href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer">
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.23c-3.23.7-3.91-1.37-3.91-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.41-1.27.74-1.56-2.58-.29-5.29-1.29-5.29-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.16 1.18A10.96 10.96 0 0 1 12 6.11c.98 0 1.95.13 2.87.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.72 5.39-5.3 5.68.42.36.79 1.07.79 2.16v3.25c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>
@@ -708,14 +887,18 @@
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9h13v-9"/><path d="M9.5 19v-5h5v5"/></svg>
             Visit the blog
           </a>
+          <a class="button" href="mailto:1120251409@bit.edu.cn">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email
+          </a>
         </div>
       </div>
       <div class="avatar-placeholder" aria-hidden="true">YW</div>
     </section>
 
-    <aside class="draft-notice" aria-label="Profile draft notice">
-      <span class="notice-mark" aria-hidden="true">!</span>
-      <p><strong>Selected work is pending.</strong>The gold label below marks a section awaiting project or publication details.</p>
+    <aside class="focus-band" aria-label="Current focus">
+      <span class="focus-mark" aria-hidden="true">●</span>
+      <p><strong>Currently</strong> turning the 4K detection pipeline into a reusable inspection toolkit, reading on reconstruction-based anomaly detection, and writing Chinese-language notes on vision and studying CS at BIT.</p>
     </aside>
 
     <div class="page-grid">
@@ -723,28 +906,145 @@
         <section class="card" id="about" aria-labelledby="about-title">
           <p class="section-label">Profile</p>
           <h2 id="about-title">About</h2>
-          <p class="about-copy">I am Yudong Wang, an undergraduate student in the School of Computer Science and Technology at Beijing Institute of Technology, with expected graduation in 2029.</p>
-          <p class="about-copy">I am interested in exploring computer vision, image and video processing, and computational photography.</p>
+          <p class="about-copy">I am Yudong Wang — also known as <strong>Zake</strong> — an undergraduate in the School of Computer Science and Technology at Beijing Institute of Technology, expected to graduate in 2029.</p>
+          <p class="about-copy">My work sits between computer vision research and deployment. I care about whether a method survives contact with real data: my most recent project took pixel-level foreign-object detection to 4K production images, diagnosed two families of approaches that failed, and ended with an unsupervised reconstruction pipeline that found every object in a small held-out set.</p>
+          <p class="about-copy">Outside of coursework I maintain a Chinese-language technical blog on computer science, campus life, and paper notes, and I enjoy building interactive storytelling prototypes in the browser.</p>
         </section>
 
         <section class="card" id="research" aria-labelledby="research-title">
           <p class="section-label">Academic direction</p>
           <h2 id="research-title">Research Interests</h2>
-          <p class="about-copy">My areas of interest include:</p>
-          <ul>
-            <li>Computer vision</li>
-            <li>Image and video processing</li>
-            <li>Computational photography</li>
+          <ul class="interest-list">
+            <li>
+              <strong>Computer vision</strong>
+              <span>Pixel-level detection, segmentation, and localization on high-resolution images.</span>
+            </li>
+            <li>
+              <strong>Visual anomaly detection &amp; industrial inspection</strong>
+              <span>Normal-only training, reconstruction-based models, and the gap between benchmark anomalies and real foreign objects.</span>
+            </li>
+            <li>
+              <strong>Image and video processing</strong>
+              <span>Multi-scale pipelines, ROI extraction, sliding-window inference, and inspection tooling.</span>
+            </li>
+            <li>
+              <strong>Representation learning</strong>
+              <span>Clustering, multi-view learning, and open-vocabulary semantics.</span>
+            </li>
+            <li>
+              <strong>Computational photography</strong>
+              <span>Imaging pipelines and photo/video processing.</span>
+            </li>
           </ul>
         </section>
 
         <section class="card" id="work" aria-labelledby="work-title">
-          <p class="section-label">Evidence</p>
+          <p class="section-label">Projects &amp; code</p>
           <h2 id="work-title">Selected Work</h2>
-          <div class="empty-state">
-            <p><strong>No verified entries have been added.</strong></p>
-            <p><span class="placeholder">[ADD ONLY VERIFIED PROJECTS OR PUBLICATIONS HERE]</span></p>
-          </div>
+
+          <article class="project">
+            <div class="project-head">
+              <div>
+                <h3>Foreign-Object Detection on 4K Tobacco Cut Surfaces</h3>
+                <p class="project-meta">Research engineering · 2026 · Python, PyTorch, OpenCV, PyQt6</p>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/pottarzake/tobacco-foreign-object-detection" target="_blank" rel="noopener noreferrer">Code ↗</a>
+              </div>
+            </div>
+            <p>Pixel-level localization of paper, plastic, metal, and fiber contaminants on 4080×3060 production images — not image-level “is there an anomaly?” classification.</p>
+            <ul class="project-points">
+              <li>Showed why text-anchor CLIP approaches fail here: normal and abnormal prompts stay nearly parallel (cosine ≈ 0.91–0.96), and discriminative losses collapse on normal-only data.</li>
+              <li>Switched to unsupervised reconstruction (INP-Former), trained on 50 normal images without masks, and detected all foreign objects in 6/6 held-out images with clean backgrounds.</li>
+              <li>Built the reusable engineering around it: ROI extraction, globally normalized 4K sliding-window inference, ROI-weighted loss, and a four-view PyQt6 inspection GUI.</li>
+              <li>Documented the failed routes and engineering pitfalls under Apache-2.0 so the negative results are reusable.</li>
+            </ul>
+            <div class="tags" aria-label="Topics">
+              <span>Anomaly detection</span>
+              <span>4K inference</span>
+              <span>Unsupervised</span>
+              <span>Industrial vision</span>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div>
+                <h3>Guaitan Museum (怪谈博物馆) — Interactive Narrative Prototype</h3>
+                <p class="project-meta">Team project · 2026 · HTML, CSS, vanilla JavaScript</p>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://pottarzake.github.io/guaitan-museum/" target="_blank" rel="noopener noreferrer">Play ↗</a>
+                <a class="project-link" href="https://github.com/pottarzake/guaitan-museum" target="_blank" rel="noopener noreferrer">Code ↗</a>
+              </div>
+            </div>
+            <p>A browser-based 2D exploration game that cuts into visual-novel scenes for key events; investigation, battles, and choices branch into multiple endings.</p>
+            <ul class="project-points">
+              <li>Eight explorable rooms with collision-aware movement and proximity-based investigation.</li>
+              <li>Visual-novel player with choices, dialogue history, auto-play, fast-forward, and 20 manual save slots plus per-user autosave via localStorage.</li>
+              <li>Dependency-free static site with a separate battle page, map editor, and a GitHub Pages demo.</li>
+            </ul>
+            <div class="tags" aria-label="Topics">
+              <span>Interactive narrative</span>
+              <span>Game prototype</span>
+              <span>Vanilla JS</span>
+              <span>Local-first</span>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div>
+                <h3>Zake’s Blog — pottarzake.github.io</h3>
+                <p class="project-meta">Personal project · since January 2026 · Hugo, HTML/CSS</p>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="/">Visit ↗</a>
+                <a class="project-link" href="https://github.com/pottarzake/pottarzake.github.io" target="_blank" rel="noopener noreferrer">Code ↗</a>
+              </div>
+            </div>
+            <p>A Chinese-language technical blog on CS coursework, campus guides, and paper reading, built with Hugo and the Stack theme and deployed on GitHub Pages.</p>
+            <ul class="project-points">
+              <li>Long-form guides including a complete freshman’s guide to computer science at BIT and a clustering survey from K-means to multi-view and open-semantic representations.</li>
+              <li>Organized with categories, tags, archives, RSS, and a dark-mode toggle.</li>
+            </ul>
+            <div class="tags" aria-label="Topics">
+              <span>Hugo</span>
+              <span>Technical writing</span>
+              <span>GitHub Pages</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="card" id="writing" aria-labelledby="writing-title">
+          <p class="section-label">Notes &amp; essays</p>
+          <h2 id="writing-title">Writing</h2>
+          <ul class="writing-list">
+            <li>
+              <a href="/post/clustering-guide/">
+                <span class="writing-title">聚类学习：从 K-means、谱聚类到多视角与开放语义表示</span>
+                <span class="writing-meta">From K-means and spectral clustering to multi-view and open-semantic representation · 学习笔记 · 2026-10-12</span>
+              </a>
+            </li>
+            <li>
+              <a href="/post/ruixin-competition/">
+                <span class="writing-title">睿信书院综测及竞赛报名指南</span>
+                <span class="writing-meta">Guide to comprehensive evaluation and competition registration at Ruixin College · 校园指南 · 2026-09-08</span>
+              </a>
+            </li>
+            <li>
+              <a href="/post/bit-guide/">
+                <span class="writing-title">BIT大一信科全流程整理</span>
+                <span class="writing-meta">A complete freshman’s guide to computer science at BIT · 校园指南 · 2026-07-14</span>
+              </a>
+            </li>
+            <li>
+              <a href="/post/hello-hugo/">
+                <span class="writing-title">Hello Hugo</span>
+                <span class="writing-meta">Starting this blog · 随笔 · 2026-01-25</span>
+              </a>
+            </li>
+          </ul>
         </section>
       </div>
 
@@ -762,6 +1062,10 @@
               <dd>School of Computer Science and Technology</dd>
             </div>
             <div>
+              <dt>Programme</dt>
+              <dd>Computer Science and Technology</dd>
+            </div>
+            <div>
               <dt>Status</dt>
               <dd>Undergraduate Student</dd>
             </div>
@@ -769,7 +1073,34 @@
               <dt>Expected graduation</dt>
               <dd>2029 (expected)</dd>
             </div>
+            <div>
+              <dt>Location</dt>
+              <dd>Beijing, China</dd>
+            </div>
           </dl>
+        </section>
+
+        <section class="card" id="toolkit" aria-labelledby="toolkit-title">
+          <p class="section-label">Day to day</p>
+          <h2 id="toolkit-title">Toolkit</h2>
+          <ul class="skill-list">
+            <li>
+              <strong>Languages</strong>
+              <span>Python, JavaScript, HTML/CSS, Shell</span>
+            </li>
+            <li>
+              <strong>Vision &amp; ML</strong>
+              <span>PyTorch, OpenCV, NumPy; CLIP-based models, INP-Former, AA-CLIP</span>
+            </li>
+            <li>
+              <strong>Engineering</strong>
+              <span>4K sliding-window inference, ROI pipelines, PyQt6 desktop tools</span>
+            </li>
+            <li>
+              <strong>Tools</strong>
+              <span>Git &amp; GitHub, Linux, Hugo, AutoDL</span>
+            </li>
+          </ul>
         </section>
 
         <section class="card" id="contact" aria-labelledby="contact-title">
@@ -782,8 +1113,10 @@
             </div>
           </dl>
           <ul class="contact-links" aria-label="External profiles">
-            <li><a href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer"><span>GitHub · @pottarzake</span><span aria-hidden="true">↗</span></a></li>
             <li><a href="https://orcid.org/0009-0000-7332-2033" target="_blank" rel="noopener noreferrer"><span>ORCID</span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="/"><span>Blog</span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="/index.xml"><span>RSS feed</span><span aria-hidden="true">↗</span></a></li>
           </ul>
         </section>
       </aside>
@@ -792,8 +1125,8 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <p>Yudong Wang · Beijing Institute of Technology</p>
-      <p><a href="/">Back to the blog</a></p>
+      <p>© 2026 Yudong Wang · Beijing Institute of Technology<br>Last updated October 2026</p>
+      <p><a href="/">Back to the blog</a> · <a href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </div>
   </footer>
 </body>
