@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Yudong Wang is an undergraduate student at Beijing Institute of Technology, interested in computer vision, image and video processing, and computational photography.">
+  <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11141b" media="(prefers-color-scheme: dark)">
+  <title>Yudong Wang · Undergraduate Academic Profile</title>
+  <link rel="canonical" href="https://pottarzake.github.io/about/">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --canvas: #f4f6fb;
+      --surface: #ffffff;
+      --surface-soft: #f8f9fc;
+      --text: #202330;
+      --text-strong: #11131a;
+      --muted: #616779;
+      --hairline: #dfe3ed;
+      --accent: #2864dc;
+      --accent-strong: #1749ad;
+      --accent-soft: #e9f0ff;
+      --placeholder-bg: #fff7d8;
+      --placeholder-border: #c38a12;
+      --placeholder-text: #694800;
+      --shadow: 0 16px 42px rgba(31, 43, 73, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --content-width: 1120px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background:
+        radial-gradient(circle at 8% 3%, rgba(40, 100, 220, 0.09), transparent 27rem),
+        var(--canvas);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent-strong);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: 12px;
+      left: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--text-strong);
+      color: var(--surface);
+      font-weight: 700;
+      transform: translateY(-180%);
+      transition: transform 160ms ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      border-bottom: 1px solid rgba(223, 227, 237, 0.9);
+      background: color-mix(in srgb, var(--canvas) 88%, transparent);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      display: flex;
+      min-height: 64px;
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      color: var(--text-strong);
+      font-size: 0.93rem;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      width: 28px;
+      height: 28px;
+      margin-right: 9px;
+      border: 1px solid var(--hairline);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--accent-strong);
+      place-items: center;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 0.78rem;
+    }
+
+    .nav-links {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-strong);
+    }
+
+    main {
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 76px 24px 84px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 48px;
+      align-items: center;
+      padding: 0 0 56px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent-strong);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 14px;
+      color: var(--text-strong);
+      font-size: clamp(2.65rem, 7vw, 5.3rem);
+      font-weight: 760;
+      letter-spacing: -0.055em;
+      line-height: 0.99;
+    }
+
+    .role {
+      margin-bottom: 5px;
+      color: var(--text-strong);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 680;
+      letter-spacing: -0.015em;
+    }
+
+    .affiliation {
+      max-width: 720px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .avatar-placeholder {
+      display: grid;
+      width: 168px;
+      aspect-ratio: 1;
+      border: 1px solid var(--hairline);
+      border-radius: 34% 66% 60% 40% / 45% 40% 60% 55%;
+      background:
+        linear-gradient(145deg, var(--accent-soft), transparent 72%),
+        var(--surface);
+      box-shadow: var(--shadow);
+      color: var(--accent-strong);
+      place-items: center;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 2.2rem;
+      font-weight: 750;
+      letter-spacing: -0.08em;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      padding: 10px 15px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+      align-items: center;
+      gap: 9px;
+      background: var(--surface);
+      color: var(--text-strong);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover {
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--hairline));
+      box-shadow: 0 7px 18px rgba(31, 43, 73, 0.08);
+      color: var(--accent-strong);
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      border-color: var(--accent-strong);
+      background: var(--accent-strong);
+      color: #ffffff;
+    }
+
+    .button.primary:hover {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .draft-notice {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      margin: 0 0 32px;
+      padding: 16px 18px;
+      border: 1px dashed var(--placeholder-border);
+      border-radius: var(--radius-md);
+      background: var(--placeholder-bg);
+      color: var(--placeholder-text);
+      font-size: 0.92rem;
+    }
+
+    .draft-notice strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .draft-notice p {
+      margin: 0;
+    }
+
+    .notice-mark {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      border: 1px solid currentcolor;
+      border-radius: 50%;
+      place-items: center;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.82fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .column {
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      padding: clamp(24px, 4vw, 38px);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(31, 43, 73, 0.025);
+    }
+
+    .card h2 {
+      margin-bottom: 17px;
+      color: var(--text-strong);
+      font-size: clamp(1.32rem, 2vw, 1.58rem);
+      font-weight: 740;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+    }
+
+    .card h3 {
+      margin-bottom: 5px;
+      color: var(--text-strong);
+      font-size: 1rem;
+      font-weight: 720;
+      line-height: 1.4;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-label {
+      display: flex;
+      margin-bottom: 13px;
+      align-items: center;
+      gap: 9px;
+      color: var(--accent-strong);
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      width: 22px;
+      height: 2px;
+      border-radius: 99px;
+      background: currentcolor;
+      content: "";
+    }
+
+    .about-copy {
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .placeholder {
+      display: inline;
+      padding: 0.1em 0.38em;
+      border: 1px dashed var(--placeholder-border);
+      border-radius: 5px;
+      background: var(--placeholder-bg);
+      color: var(--placeholder-text);
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 0.88em;
+      font-weight: 720;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    h1 .placeholder {
+      padding: 0.05em 0.16em;
+      border-width: 2px;
+      border-radius: 8px;
+      font-size: 0.78em;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border: 1px dashed var(--hairline);
+      border-radius: var(--radius-sm);
+      background: var(--surface-soft);
+      color: var(--muted);
+    }
+
+    .empty-state p {
+      margin-bottom: 8px;
+    }
+
+    .empty-state p:last-child {
+      margin-bottom: 0;
+    }
+
+    .meta-list {
+      display: grid;
+      margin: 0;
+      gap: 18px;
+    }
+
+    .meta-list > div {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .meta-list > div:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    dt {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      color: var(--text-strong);
+      font-weight: 620;
+      line-height: 1.45;
+    }
+
+    .contact-links {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .contact-links a {
+      display: flex;
+      min-height: 44px;
+      padding: 9px 11px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--text-strong);
+      font-size: 0.9rem;
+      font-weight: 680;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--surface) 66%, var(--canvas));
+    }
+
+    .footer-inner {
+      display: flex;
+      min-height: 92px;
+      max-width: var(--content-width);
+      margin: 0 auto;
+      padding: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .footer-inner p {
+      margin: 0;
+    }
+
+    @media (max-width: 840px) {
+      .nav-links li:not(:last-child) {
+        display: none;
+      }
+
+      main {
+        padding-top: 52px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .avatar-placeholder {
+        grid-row: 1;
+        width: 118px;
+      }
+
+      .page-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav,
+      main,
+      .footer-inner {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+
+      .brand-mark {
+        display: none;
+      }
+
+      main {
+        padding-top: 40px;
+        padding-bottom: 58px;
+      }
+
+      .hero {
+        padding-bottom: 38px;
+      }
+
+      h1 {
+        font-size: clamp(2.25rem, 15vw, 3.5rem);
+      }
+
+      .actions {
+        display: grid;
+      }
+
+      .button {
+        justify-content: center;
+      }
+
+      .draft-notice {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 23px 20px;
+      }
+
+      .footer-inner {
+        padding-top: 26px;
+        padding-bottom: 26px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #11141b;
+        --surface: #191d26;
+        --surface-soft: #141821;
+        --text: #d8dce7;
+        --text-strong: #f3f5fa;
+        --muted: #a7aebe;
+        --hairline: #303746;
+        --accent: #8eb5ff;
+        --accent-strong: #a9c6ff;
+        --accent-soft: #202f4c;
+        --placeholder-bg: #332b14;
+        --placeholder-border: #d8a53e;
+        --placeholder-text: #ffda86;
+        --shadow: 0 18px 52px rgba(0, 0, 0, 0.28);
+      }
+
+      .site-header {
+        border-bottom-color: rgba(48, 55, 70, 0.88);
+      }
+
+      .button.primary {
+        border-color: #dce7ff;
+        background: #dce7ff;
+        color: #11234c;
+      }
+
+      .button.primary:hover {
+        border-color: #ffffff;
+        background: #ffffff;
+        color: #11234c;
+      }
+    }
+
+    @media (prefers-contrast: more) {
+      :root {
+        --hairline: currentcolor;
+      }
+
+      .card,
+      .button,
+      .contact-links a {
+        border-width: 2px;
+      }
+
+      .placeholder {
+        border-style: solid;
+        border-width: 2px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media print {
+      :root {
+        --canvas: #ffffff;
+        --surface: #ffffff;
+        --text: #222222;
+        --text-strong: #000000;
+        --muted: #444444;
+        --hairline: #bbbbbb;
+        --accent: #1749ad;
+        --accent-strong: #1749ad;
+        --placeholder-bg: #ffffff;
+        --placeholder-text: #5e4200;
+      }
+
+      .site-header,
+      .actions,
+      .skip-link {
+        display: none;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      main {
+        max-width: none;
+        padding: 24px 0;
+      }
+
+      .hero {
+        padding-bottom: 28px;
+      }
+
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="/about/" aria-label="Academic profile home">
+        <span class="brand-mark" aria-hidden="true">CS</span>Academic Profile
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="/">Blog ↗</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="profile-name">
+      <div>
+        <p class="eyebrow">Undergraduate Academic Profile</p>
+        <h1 id="profile-name">Yudong Wang</h1>
+        <p class="role">Undergraduate Student</p>
+        <p class="affiliation">School of Computer Science and Technology<br>Beijing Institute of Technology</p>
+        <div class="actions" aria-label="Profile links">
+          <a class="button primary" href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.23c-3.23.7-3.91-1.37-3.91-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.41-1.27.74-1.56-2.58-.29-5.29-1.29-5.29-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.16 1.18A10.96 10.96 0 0 1 12 6.11c.98 0 1.95.13 2.87.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.72 5.39-5.3 5.68.42.36.79 1.07.79 2.16v3.25c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .7Z"/></svg>
+            GitHub
+          </a>
+          <a class="button" href="https://orcid.org/0009-0000-7332-2033" target="_blank" rel="noopener noreferrer">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24ZM7.37 5.43a1.38 1.38 0 1 1 0 2.76 1.38 1.38 0 0 1 0-2.76Zm1.16 12.84H6.2V9.55h2.33v8.72Zm3.44 0H9.64V5.73h3.44c4.63 0 6.67 3.31 6.67 6.27 0 3.22-2.5 6.27-7.78 6.27Zm.12-10.43h-.12v8.32h.12c3.39 0 5.26-1.48 5.26-4.16 0-2.45-1.66-4.16-5.26-4.16Z"/></svg>
+            ORCID
+          </a>
+          <a class="button" href="/">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9h13v-9"/><path d="M9.5 19v-5h5v5"/></svg>
+            Visit the blog
+          </a>
+        </div>
+      </div>
+      <div class="avatar-placeholder" aria-hidden="true">YW</div>
+    </section>
+
+    <aside class="draft-notice" aria-label="Profile draft notice">
+      <span class="notice-mark" aria-hidden="true">!</span>
+      <p><strong>Selected work is pending.</strong>The gold label below marks a section awaiting project or publication details.</p>
+    </aside>
+
+    <div class="page-grid">
+      <div class="column">
+        <section class="card" id="about" aria-labelledby="about-title">
+          <p class="section-label">Profile</p>
+          <h2 id="about-title">About</h2>
+          <p class="about-copy">I am Yudong Wang, an undergraduate student in the School of Computer Science and Technology at Beijing Institute of Technology, with expected graduation in 2029.</p>
+          <p class="about-copy">I am interested in exploring computer vision, image and video processing, and computational photography.</p>
+        </section>
+
+        <section class="card" id="research" aria-labelledby="research-title">
+          <p class="section-label">Academic direction</p>
+          <h2 id="research-title">Research Interests</h2>
+          <p class="about-copy">My areas of interest include:</p>
+          <ul>
+            <li>Computer vision</li>
+            <li>Image and video processing</li>
+            <li>Computational photography</li>
+          </ul>
+        </section>
+
+        <section class="card" id="work" aria-labelledby="work-title">
+          <p class="section-label">Evidence</p>
+          <h2 id="work-title">Selected Work</h2>
+          <div class="empty-state">
+            <p><strong>No verified entries have been added.</strong></p>
+            <p><span class="placeholder">[ADD ONLY VERIFIED PROJECTS OR PUBLICATIONS HERE]</span></p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="column" aria-label="Profile details">
+        <section class="card" id="education" aria-labelledby="education-title">
+          <p class="section-label">Background</p>
+          <h2 id="education-title">Education</h2>
+          <dl class="meta-list">
+            <div>
+              <dt>Institution</dt>
+              <dd>Beijing Institute of Technology</dd>
+            </div>
+            <div>
+              <dt>School</dt>
+              <dd>School of Computer Science and Technology</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Undergraduate Student</dd>
+            </div>
+            <div>
+              <dt>Expected graduation</dt>
+              <dd>2029 (expected)</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="card" id="contact" aria-labelledby="contact-title">
+          <p class="section-label">Connect</p>
+          <h2 id="contact-title">Contact</h2>
+          <dl class="meta-list">
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:1120251409@bit.edu.cn">1120251409@bit.edu.cn</a></dd>
+            </div>
+          </dl>
+          <ul class="contact-links" aria-label="External profiles">
+            <li><a href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://orcid.org/0009-0000-7332-2033" target="_blank" rel="noopener noreferrer"><span>ORCID</span><span aria-hidden="true">↗</span></a></li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Yudong Wang · Beijing Institute of Technology</p>
+      <p><a href="/">Back to the blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>
