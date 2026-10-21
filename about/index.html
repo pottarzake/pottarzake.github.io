@@ -901,7 +901,7 @@
 
     <aside class="focus-band" aria-label="Current focus">
       <span class="focus-mark" aria-hidden="true">●</span>
-      <p><strong>Currently</strong> reproducing GLGC with a paper-aligned implementation, designing stability and noisy-constraint experiments for TriGAC, and keeping notes on open-semantic and multi-level clustering.</p>
+      <p><strong>Current work</strong> includes TriGAC reproduction, a paper-aligned GLGC implementation, and exploratory Fruit experiments with Multi-MaP and Multi-Sub. Next steps focus on stability, noisy constraints, and protocol-sensitive evaluation.</p>
     </aside>
 
     <div class="page-grid">
@@ -910,8 +910,8 @@
           <p class="section-label">Profile</p>
           <h2 id="about-title">About</h2>
           <p class="about-copy">I am Yudong Wang — also known as <strong>Zake</strong> — an undergraduate in the School of Computer Science and Technology at Beijing Institute of Technology, expected to graduate in 2029.</p>
-          <p class="about-copy">I am advised by <a href="https://fanglanting.github.io/" target="_blank" rel="noopener noreferrer">Dr. Lanting Fang</a>. My broader research interests include graph data mining, trustworthy machine learning, and the intersection of large language models and graphs.</p>
-          <p class="about-copy">My current research is multi-view clustering, especially constraint-based and active methods. I reproduce recent papers, audit where the released code departs from the paper, and build experiment pipelines for stability, ablation, and noisy-constraint studies. I care less about a single best ARI than about whether a gain survives different seeds, preprocessing choices, and wrong answers.</p>
+          <p class="about-copy">I am advised by <a href="https://fanglanting.github.io/" target="_blank" rel="noopener noreferrer">Dr. Lanting Fang</a>. My research interests span graph data mining, trustworthy machine learning, and the intersection of large language models and graphs, including security and spatiotemporal applications.</p>
+          <p class="about-copy">My current hands-on work focuses on multi-view, active constrained, and multimodal multiple clustering. I reproduce existing methods, compare paper formulas with released implementations, and document training behavior and evaluation choices. I am preparing stability, ablation, and noisy-constraint studies, with an emphasis on reproducible evidence rather than isolated best scores.</p>
           <p class="about-copy">I also keep a Chinese-language technical blog, where I write up clustering notes, CS study guides, and paper reading. Earlier applied work includes pixel-level foreign-object detection on 4K industrial images.</p>
         </section>
 
@@ -936,6 +936,10 @@
               <span>An area I would like to explore: graph reasoning and knowledge-graph-enhanced retrieval.</span>
             </li>
             <li>
+              <strong>Security &amp; spatiotemporal applications</strong>
+              <span>Application interests include anomaly detection, security analysis, and spatiotemporal prediction.</span>
+            </li>
+            <li>
               <strong>Reproducibility &amp; empirical evaluation</strong>
               <span>Paper–code alignment, seed and preprocessing variance, ablations, and ARI/NMI/ACC accounting against query cost.</span>
             </li>
@@ -949,22 +953,65 @@
           <article class="project">
             <div class="project-head">
               <div>
-                <h3>Multi-View Clustering: Reproduction &amp; Evaluation</h3>
-                <p class="project-meta">Undergraduate research · 2026 · PyTorch, scikit-learn, UMAP</p>
+                <h3>TriGAC — Active Constrained Multi-View Clustering</h3>
+                <p class="project-meta">Reproduction &amp; evaluation · 2026 · Python, scikit-learn, UMAP</p>
               </div>
             </div>
-            <p>A private research workspace for reproducing and stress-testing recent multi-view clustering methods before building on them.</p>
+            <p>A reproduction study of graph-based interactive multi-view clustering, with attention to pairwise-query budgets and preprocessing choices.</p>
             <ul class="project-points">
-              <li>Ran TriGAC (active constrained multi-view clustering) on 3Sources, BBCSport, and MNIST-4, and built a paper-budget vs. observed-ARI comparison.</li>
-              <li>Rebuilding GLGC (CVPR 2026) from a fixed upstream commit: audited paper–code differences in feature dimensions, decoder order, loss weighting, and graph scope, then implemented a paper-aligned adapter covered by automated tests.</li>
-              <li>Audited and adapted Fruit, Fruit360, and Cards for Multi-MaP / Multi-Sub comparison runs under a shared evaluation protocol.</li>
-              <li>Next steps: seed and preprocessing stability, module ablations, and Must-Link / Cannot-Link noise experiments.</li>
+              <li>Ran the author implementation on 3Sources, BBCSport, and MNIST-4 with paper-matched query budgets, and recorded ARI, NMI, query counts, and runtimes.</li>
+              <li>Added dataset and budget selection, result tables, and reproducibility notes without changing the core algorithm.</li>
+              <li>The recorded baseline uses one fixed seed; multi-seed stability, module ablations, and noisy Must-Link / Cannot-Link feedback remain planned experiments.</li>
             </ul>
             <div class="tags" aria-label="Topics">
               <span>Multi-view clustering</span>
               <span>Active constraints</span>
-              <span>Reproduction</span>
+              <span>Graph learning</span>
+              <span>Reproducibility</span>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div>
+                <h3>GLGC — Incomplete &amp; Noisy Multi-View Clustering</h3>
+                <p class="project-meta">Implementation &amp; validation in progress · 2026 · PyTorch</p>
+              </div>
+            </div>
+            <p>A paper-aligned implementation study of global-graph-guided and local-graph-weighted contrastive learning.</p>
+            <ul class="project-points">
+              <li>Pinned the upstream source revision and checked the DHA, LandUse-21, ProteinFold, and ALOI dataset inputs.</li>
+              <li>Audited differences in feature dimensions, decoder structure, graph construction, and loss weighting, then implemented an independent paper adapter.</li>
+              <li>Validated formula components, missing/noisy-view masks, checkpoint round trips, and a synthetic forward/backward update with automated checks and a CUDA gradient audit.</li>
+              <li>Status: real-data smoke tests and full training have not started; the completed work establishes an implementation baseline, not a successful paper reproduction.</li>
+            </ul>
+            <div class="tags" aria-label="Topics">
+              <span>Graph contrastive learning</span>
+              <span>Missing views</span>
+              <span>Noisy data</span>
               <span>PyTorch</span>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="project-head">
+              <div>
+                <h3>Multi-MaP &amp; Multi-Sub — Multimodal Multiple Clustering</h3>
+                <p class="project-meta">Exploratory reproduction study · 2026 · CLIP, PyTorch</p>
+              </div>
+            </div>
+            <p>A study of semantic clustering criteria and multimodal proxy learning, separating training behavior from the final clustering evaluation protocol.</p>
+            <ul class="project-points">
+              <li>Audited Fruit, Fruit360, and Cards data and established separate paper adapters for Multi-MaP and Multi-Sub.</li>
+              <li>Completed Fruit Species/Color short runs and one exploratory configuration per method: 1000 epochs for Multi-MaP and 1000 total stage epochs for Multi-Sub.</li>
+              <li>Checked parameter freezing and gradient flow, and kept proxy-label outputs separate from KMeans diagnostics on learned representations.</li>
+              <li>The tested configurations did not reproduce the published scores. Current records document output collapse, initialization sensitivity, and unresolved training/evaluation details for further investigation.</li>
+            </ul>
+            <div class="tags" aria-label="Topics">
+              <span>Multimodal learning</span>
+              <span>Multiple clustering</span>
+              <span>Proxy learning</span>
+              <span>Evaluation protocols</span>
             </div>
           </article>
 
