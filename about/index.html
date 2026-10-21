@@ -4,8 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Yudong Wang (Zake) is a computer science undergraduate at Beijing Institute of Technology, advised by Dr. Lanting Fang. His current work focuses on multi-view clustering, with broader interests in graph data mining and trustworthy machine learning.">
-  <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#11141b" media="(prefers-color-scheme: dark)">
+  <meta id="theme-color" name="theme-color" content="#f4f6fb">
+  <script id="theme-init">
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("AcademicProfileTheme"); } catch (_) {}
+      const preferred = saved === "light" || saved === "dark" ? saved : null;
+      const theme = preferred || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.dataset.themePreference = preferred || "system";
+      document.getElementById("theme-color").content = theme === "dark" ? "#11141b" : "#f4f6fb";
+    })();
+  </script>
   <title>Yudong Wang · Clustering &amp; Graph Mining · BIT</title>
   <link rel="canonical" href="https://pottarzake.github.io/about/">
   <link rel="alternate" type="application/rss+xml" href="/index.xml" title="Zake 的个人博客">
@@ -53,7 +63,7 @@
   </script>
   <style>
     :root {
-      color-scheme: light dark;
+      color-scheme: light;
       --canvas: #f4f6fb;
       --surface: #ffffff;
       --surface-soft: #f8f9fc;
@@ -64,6 +74,9 @@
       --accent: #2864dc;
       --accent-strong: #1749ad;
       --accent-soft: #e9f0ff;
+      --primary-bg: #1749ad;
+      --primary-hover-bg: #2864dc;
+      --primary-text: #ffffff;
       --shadow: 0 16px 42px rgba(31, 43, 73, 0.08);
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -134,7 +147,7 @@
       position: sticky;
       z-index: 20;
       top: 0;
-      border-bottom: 1px solid rgba(223, 227, 237, 0.9);
+      border-bottom: 1px solid var(--hairline);
       background: color-mix(in srgb, var(--canvas) 88%, transparent);
       backdrop-filter: blur(14px);
     }
@@ -180,6 +193,46 @@
       align-items: center;
       gap: 22px;
       list-style: none;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      min-height: 44px;
+      padding: 9px 12px;
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: var(--surface);
+      color: var(--text-strong);
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .theme-toggle[hidden] {
+      display: none;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+    }
+
+    .theme-toggle .sun-icon,
+    :root[data-theme="dark"] .theme-toggle .moon-icon {
+      display: none;
+    }
+
+    :root[data-theme="dark"] .theme-toggle .sun-icon {
+      display: block;
     }
 
     .nav-links a {
@@ -304,15 +357,15 @@
     }
 
     .button.primary {
-      border-color: var(--accent-strong);
-      background: var(--accent-strong);
-      color: #ffffff;
+      border-color: var(--primary-bg);
+      background: var(--primary-bg);
+      color: var(--primary-text);
     }
 
     .button.primary:hover {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #ffffff;
+      border-color: var(--primary-hover-bg);
+      background: var(--primary-hover-bg);
+      color: var(--primary-text);
     }
 
     .icon {
@@ -718,6 +771,15 @@
         display: none;
       }
 
+      .nav,
+      .nav-controls {
+        gap: 12px;
+      }
+
+      .nav-links li:not(:last-child) {
+        display: none;
+      }
+
       main {
         padding-top: 40px;
         padding-bottom: 58px;
@@ -756,8 +818,27 @@
       }
     }
 
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #11141b;
+      --surface: #191d26;
+      --surface-soft: #141821;
+      --text: #d8dce7;
+      --text-strong: #f3f5fa;
+      --muted: #a7aebe;
+      --hairline: #303746;
+      --accent: #8eb5ff;
+      --accent-strong: #a9c6ff;
+      --accent-soft: #202f4c;
+      --primary-bg: #dce7ff;
+      --primary-hover-bg: #ffffff;
+      --primary-text: #11234c;
+      --shadow: 0 18px 52px rgba(0, 0, 0, 0.28);
+    }
+
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme]) {
+        color-scheme: dark;
         --canvas: #11141b;
         --surface: #191d26;
         --surface-soft: #141821;
@@ -768,23 +849,10 @@
         --accent: #8eb5ff;
         --accent-strong: #a9c6ff;
         --accent-soft: #202f4c;
+        --primary-bg: #dce7ff;
+        --primary-hover-bg: #ffffff;
+        --primary-text: #11234c;
         --shadow: 0 18px 52px rgba(0, 0, 0, 0.28);
-      }
-
-      .site-header {
-        border-bottom-color: rgba(48, 55, 70, 0.88);
-      }
-
-      .button.primary {
-        border-color: #dce7ff;
-        background: #dce7ff;
-        color: #11234c;
-      }
-
-      .button.primary:hover {
-        border-color: #ffffff;
-        background: #ffffff;
-        color: #11234c;
       }
     }
 
@@ -795,6 +863,7 @@
 
       .card,
       .button,
+      .theme-toggle,
       .contact-links a {
         border-width: 2px;
       }
@@ -814,7 +883,10 @@
     }
 
     @media print {
-      :root {
+      :root,
+      :root:not([data-theme]),
+      :root[data-theme="dark"] {
+        color-scheme: light;
         --canvas: #ffffff;
         --surface: #ffffff;
         --text: #222222;
@@ -859,13 +931,20 @@
       <a class="brand" href="/about/" aria-label="Academic profile home">
         <span class="brand-mark" aria-hidden="true">CS</span>Academic Profile
       </a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="/">Blog ↗</a></li>
-      </ul>
+      <div class="nav-controls">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#writing">Writing</a></li>
+          <li><a href="/">Blog ↗</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Switch to dark mode" hidden>
+          <svg class="icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/></svg>
+          <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg>
+          <span id="theme-toggle-label">Dark</span>
+        </button>
+      </div>
     </nav>
   </header>
 
@@ -1210,5 +1289,47 @@
       <p><a href="/">Back to the blog</a> · <a href="https://github.com/pottarzake" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </div>
   </footer>
+  <script id="theme-controls">
+    (() => {
+      const root = document.documentElement;
+      const toggle = document.getElementById("theme-toggle");
+      const label = document.getElementById("theme-toggle-label");
+      const themeColor = document.getElementById("theme-color");
+      const system = window.matchMedia("(prefers-color-scheme: dark)");
+      let followSystem = root.dataset.themePreference !== "light" && root.dataset.themePreference !== "dark";
+
+      function applyTheme(theme) {
+        const dark = theme === "dark";
+        root.dataset.theme = theme;
+        toggle.setAttribute("aria-pressed", String(dark));
+        toggle.title = dark ? "Switch to light mode" : "Switch to dark mode";
+        label.textContent = dark ? "Light" : "Dark";
+        themeColor.content = dark ? "#11141b" : "#f4f6fb";
+      }
+
+      applyTheme(root.dataset.theme || (system.matches ? "dark" : "light"));
+      toggle.hidden = false;
+
+      toggle.addEventListener("click", () => {
+        const theme = root.dataset.theme === "dark" ? "light" : "dark";
+        followSystem = false;
+        root.dataset.themePreference = theme;
+        applyTheme(theme);
+        try { localStorage.setItem("AcademicProfileTheme", theme); } catch (_) {}
+      });
+
+      system.addEventListener("change", event => {
+        if (followSystem) applyTheme(event.matches ? "dark" : "light");
+      });
+
+      window.addEventListener("storage", event => {
+        if (event.key !== "AcademicProfileTheme" && event.key !== null) return;
+        const valid = event.newValue === "light" || event.newValue === "dark";
+        followSystem = !valid;
+        root.dataset.themePreference = valid ? event.newValue : "system";
+        applyTheme(valid ? event.newValue : (system.matches ? "dark" : "light"));
+      });
+    })();
+  </script>
 </body>
 </html>
