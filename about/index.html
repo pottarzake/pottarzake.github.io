@@ -983,7 +983,7 @@
 
     <aside class="focus-band" aria-label="Current focus">
       <span class="focus-mark" aria-hidden="true">●</span>
-      <p><strong>Current work</strong> is training-free guideline-conditioned image grouping: a frozen Qwen3-VL-8B reads per-image label probabilities from one batch forward pass, then a fixed clustering step forms K groups. A sealed 8-criterion benchmark (800 tasks × 3 image orders) compares this readout with adapted ICC, ICTC, and GCPM baselines. Next steps: order robustness, texture/count readout, and an active-query correction route that checks hard images with an LLM.</p>
+      <p><strong>Current work</strong> is training-free image grouping with frozen vision-language models — organizing an image batch under a given criterion and target K — benchmarked against adapted ICC, ICTC, and GCPM baselines. Next: better order robustness, and correcting hard cases with limited LLM checks.</p>
     </aside>
 
     <div class="page-grid">
